@@ -1,0 +1,5 @@
+# deps
+node_modules/
+.kanelrc.ts
+
+.env.local

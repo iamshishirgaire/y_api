@@ -1,0 +1,22 @@
+{
+  "scripts": {
+    "dev": "bun run --hot src/index.ts",
+    "db:migrate": "bun run db/migrations/index.ts",
+    "db:seed": "bun run db/seed.ts",
+    "gen:module": "bun run src/utils/genModule.ts",
+    "db:generate": "bunx kanel"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "@hono/zod-validator": "^0.2.2",
+    "chalk": "^5.3.0",
+    "hono": "^4.4.0",
+    "ora": "^8.0.1",
+    "postgres": "3.4.4",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "kanel": "^3.8.9"
+  }
+}
