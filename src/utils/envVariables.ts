@@ -3,6 +3,7 @@ const envSchema = z.object({
   NODE_ENV: z.string({ message: "NODE_ENV must be a string" }),
   PORT: z.string().optional(),
   DATABASE_URL: z.string(),
+  JWT_SECRET: z.string(),
 });
 
 const result = envSchema.safeParse(process.env);

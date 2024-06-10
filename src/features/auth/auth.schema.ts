@@ -40,3 +40,7 @@ export const authSignupSchema = z.object({
 export const authForgotPasswordSchema = z.object({
   email: z.string().email(),
 });
+
+export const authGoogleSigninSchema = z.object({
+  token: z.string(),
+})
