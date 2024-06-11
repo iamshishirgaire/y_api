@@ -13,7 +13,7 @@ export const generateAccessToken = (payload: CustomJwtPayload) => {
     const token = jwt.sign(payload, secretKey, { expiresIn: "15m" });
     return token;
   } catch (error) {
-    throw new Error("Error generating access token");
+    throw error;
   }
 };
 
@@ -22,7 +22,7 @@ export const generateRefreshToken = (payload: CustomJwtPayload) => {
     const token = jwt.sign(payload, secretKey, { expiresIn: "30d" });
     return token;
   } catch (error) {
-    throw new Error("Error generating refresh token");
+    throw error;
   }
 };
 
@@ -31,7 +31,7 @@ export const validateToken = (token: string) => {
     const decoded = jwt.verify(token, secretKey) as CustomJwtPayload;
     return decoded;
   } catch (error) {
-    throw new Error("Error validating token");
+    throw error;
   }
 };
 

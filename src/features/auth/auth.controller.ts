@@ -11,12 +11,17 @@ import {
   generateRefreshToken,
   validateToken,
 } from "../../utils/jwt";
+import { validateAuth } from "../../middleware/auth.middleware";
 
-export const authRoute = new Hono();
+type Variables = {
+  userId: string;
+};
+export const authRoute = new Hono<{ Variables: Variables }>();
 const authService = new AuthService();
 const userService = new UserService();
 
 authRoute
+  .use(validateAuth)
   .post(
     "/signin/google",
     zValidator("json", authGoogleSigninSchema, onErrorMsg),
@@ -27,8 +32,8 @@ authRoute
         const user = await userService.findByEmail(data.email);
 
         let usr;
-        if (user[0]?.email) {
-          usr = user[0];
+        if (user.email) {
+          usr = user;
         } else {
           usr = await userService.create(data);
         }
@@ -49,7 +54,7 @@ authRoute
         });
 
         return c.json({
-          message: user[0]?.email
+          message: usr.email
             ? "Signed in successfully"
             : "User created successfully",
           accessToken: accessToken,
@@ -94,4 +99,18 @@ authRoute
       console.error(error);
       throw new HTTPException(400, { message: "Failed to refresh token" });
     }
+  })
+  .get("/me", async (c) => {
+    const userId = c.get("userId");
+    const user = await userService.findById(userId);
+    c.status(200);
+    return c.json(user);
+  })
+  .post("/logout", async (c) => {
+    setCookie(c, "refreshToken", "", {
+      httpOnly: true,
+      secure: true,
+    });
+    c.status(200);
+    return c.json({ message: "Logged out successfully" });
   });

@@ -16,11 +16,20 @@ export class UserService {
           email: string;
         }[]
       >`select  id,email from users where users.email = ${email} limit 1`;
-      return usr;
+      return usr[0];
     } catch (error) {
       throw error;
     }
-    // Your logic here
+  }
+  public async findById(userId: string) {
+    try {
+      const usr = await db<
+        Users[]
+      >`select  * from users where users.id = ${userId} limit 1`;
+      return usr[0];
+    } catch (error) {
+      throw error;
+    }
   }
 
   public async create(response: GoogleTokenResponse) {
