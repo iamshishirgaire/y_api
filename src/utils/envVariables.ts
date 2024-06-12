@@ -4,6 +4,8 @@ const envSchema = z.object({
   PORT: z.string().optional(),
   DATABASE_URL: z.string(),
   JWT_SECRET: z.string(),
+  JWT_EXPIRES_IN: z.string(),
+  JWT_COOKIE_EXPIRES_IN: z.string(),
 });
 
 const result = envSchema.safeParse(process.env);

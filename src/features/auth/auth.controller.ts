@@ -21,7 +21,6 @@ const authService = new AuthService();
 const userService = new UserService();
 
 authRoute
-  .use(validateAuth)
   .post(
     "/signin/google",
     zValidator("json", authGoogleSigninSchema, onErrorMsg),
@@ -68,14 +67,13 @@ authRoute
   )
 
   .post("/refresh-token", async (c) => {
-    const refreshTokenFromCookie = getCookie(c, "refreshToken");
-    const body = await c.req.json();
-    let refreshToken = body.refreshToken || refreshTokenFromCookie;
-
-    if (!refreshToken) {
-      throw new HTTPException(400, { message: "No refresh token found" });
-    }
     try {
+      const refreshTokenFromCookie = getCookie(c, "refreshToken");
+      const refreshTokenFromHeader = c.req.header("token");
+      let refreshToken = refreshTokenFromHeader || refreshTokenFromCookie;
+      if (!refreshToken) {
+        throw new HTTPException(400, { message: "No refresh token found" });
+      }
       const decoded = validateToken(refreshToken);
       const accessToken = generateAccessToken({
         userId: decoded.userId,
@@ -90,13 +88,13 @@ authRoute
         httpOnly: true,
         secure: true,
       });
+      c.status(200);
       return c.json({
         message: "Token refreshed successfully",
         accessToken: accessToken,
         refreshToken: newRefreshToken,
       });
     } catch (error) {
-      console.error(error);
       throw new HTTPException(400, { message: "Failed to refresh token" });
     }
   })

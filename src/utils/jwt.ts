@@ -10,7 +10,9 @@ export interface CustomJwtPayload extends JwtPayload {
 
 export const generateAccessToken = (payload: CustomJwtPayload) => {
   try {
-    const token = jwt.sign(payload, secretKey, { expiresIn: "15m" });
+    const token = jwt.sign(payload, secretKey, {
+      expiresIn: env.JWT_EXPIRES_IN,
+    });
     return token;
   } catch (error) {
     throw error;
@@ -19,7 +21,9 @@ export const generateAccessToken = (payload: CustomJwtPayload) => {
 
 export const generateRefreshToken = (payload: CustomJwtPayload) => {
   try {
-    const token = jwt.sign(payload, secretKey, { expiresIn: "30d" });
+    const token = jwt.sign(payload, secretKey, {
+      expiresIn: env.JWT_COOKIE_EXPIRES_IN,
+    });
     return token;
   } catch (error) {
     throw error;

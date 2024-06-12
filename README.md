@@ -9,9 +9,10 @@ TASKS :
 - [x] Script to seed database
 - [x] Script to generate modules
 - [x] Script to generate typescript types from pg tables
+- [x] User Module
+- [x] Auth module : Google Authentication
 - [ ] Ratelimiting (w @upstash/redis)
-- [ ] User Module
-- [ ] Auth module : Google Authentication
 - [ ] Tweets Module
 - [ ] Polls Module
+- [ ] Direct Message Module
 

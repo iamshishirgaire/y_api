@@ -2,16 +2,14 @@
 import { createMiddleware } from "hono/factory";
 import { validateToken } from "../utils/jwt";
 import { HTTPException } from "hono/http-exception";
-
-const publicRoutes = [
-  "auth/signin/google",
-  "auth/refresh-token",
-  "auth/logout",
-];
+import { publicRoutes } from "../public.routes";
 
 export const validateAuth = createMiddleware(async (c, next) => {
   const absolutePath = c.req.path.split("/api/v1/")[1];
+  console.log(absolutePath);
   if (publicRoutes.includes(absolutePath)) {
+    console.log("Public route");
+
     await next();
     return;
   }

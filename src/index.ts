@@ -5,6 +5,7 @@ import { cors } from "hono/cors";
 import { routes } from "./app";
 import { csrf } from "hono/csrf";
 import { HTTPException } from "hono/http-exception";
+import { validateAuth } from "./middleware/auth.middleware";
 
 await testDbClient();
 const app = new Hono().basePath("/api/v1");
@@ -27,5 +28,6 @@ app.get("/status", (c) => {
     message: "Server up and running",
   });
 });
+app.use(validateAuth);
 routes(app);
 export default app;
