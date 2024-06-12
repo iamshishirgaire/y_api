@@ -14,9 +14,8 @@ userRoute.get("/", zValidator("query", userQuerySchema, onErrorMsg), (c) => {
   }
   if (query.id) {
     return c.json(userService.findById(query.id));
-  } else {
-    throw new HTTPException(400, {
-      message: "Query must contain either 'email' or 'id'",
-    });
   }
+  throw new HTTPException(400, {
+    message: "Query must contain either 'email' or 'id'",
+  });
 });

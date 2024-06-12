@@ -1,17 +1,16 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
+import { getCookie, setCookie } from "hono/cookie";
 import { HTTPException } from "hono/http-exception";
-import { onErrorMsg } from "../../utils/zodValidationMessage";
-import { UserService } from "../user/user.service";
-import { authGoogleSigninSchema } from "./auth.schema";
-import { AuthService } from "./auth.service";
-import { setCookie, getCookie } from "hono/cookie";
 import {
   generateAccessToken,
   generateRefreshToken,
   validateToken,
 } from "../../utils/jwt";
-import { validateAuth } from "../../middleware/auth.middleware";
+import { onErrorMsg } from "../../utils/zodValidationMessage";
+import { UserService } from "../user/user.service";
+import { authGoogleSigninSchema } from "./auth.schema";
+import { AuthService } from "./auth.service";
 
 type Variables = {
   userId: string;
@@ -30,7 +29,10 @@ authRoute
         const data = await authService.verifyGoogleToken(validated.token);
         const user = await userService.findByEmail(data.email);
 
-        let usr;
+        let usr: {
+          id: string;
+          email: string;
+        };
         if (user.email) {
           usr = user;
         } else {
@@ -70,7 +72,7 @@ authRoute
     try {
       const refreshTokenFromCookie = getCookie(c, "refreshToken");
       const refreshTokenFromHeader = c.req.header("token");
-      let refreshToken = refreshTokenFromHeader || refreshTokenFromCookie;
+      const refreshToken = refreshTokenFromHeader || refreshTokenFromCookie;
       if (!refreshToken) {
         throw new HTTPException(400, { message: "No refresh token found" });
       }
