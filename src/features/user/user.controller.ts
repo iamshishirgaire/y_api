@@ -7,29 +7,30 @@ import { UserService } from "./user.service";
 export const userRoute = new Hono();
 
 const userService = new UserService();
-userRoute.get("/", zValidator("query", userQuerySchema, onErrorMsg), async (c) => {
-  const query = c.req.valid("query");
-  if (query.email) {
-    return c.json(await userService.findByEmail(query.email));
-  }
-  if (query.id) {
-    return c.json(await userService.findById(query.id));
-  }
-  throw new HTTPException(400, {
-    message: "Query must contain either 'email' or 'id'",
-  });
-}).patch("/", zValidator("form", updateUserSchema, onErrorMsg), async (c) => {
-  const body = c.req.valid("form");
-  try {
-    await userService.update(body);
-    c.status(201);
-    return c.json({
-      message: "User updated successfully",
-    })
-  } catch (e) {
+userRoute
+  .get("/", zValidator("query", userQuerySchema, onErrorMsg), async (c) => {
+    const query = c.req.valid("query");
+    if (query.email) {
+      return c.json((await userService.findByEmail(query.email)) ?? {});
+    }
+    if (query.id) {
+      return c.json((await userService.findById(query.id)) ?? {});
+    }
     throw new HTTPException(400, {
-      message: "Failed to update user"
-    })
-  }
-
-});
+      message: "Query must contain either 'email' or 'id'",
+    });
+  })
+  .patch("/", zValidator("json", updateUserSchema, onErrorMsg), async (c) => {
+    const body = c.req.valid("json");
+    try {
+      await userService.update(body);
+      c.status(201);
+      return c.json({
+        message: "User updated successfully",
+      });
+    } catch (e) {
+      throw new HTTPException(400, {
+        message: "Failed to update user",
+      });
+    }
+  });

@@ -18,14 +18,10 @@ export async function testDbClient() {
   }
 }
 const dbClient = async () => {
-  try {
-    const pg = postgres(env.DATABASE_URL);
-    await pg`SELECT 1`;
-    return pg;
-  } catch (error) {
-    throw error;
-  }
+  const pg = postgres(env.DATABASE_URL);
+  await pg`SELECT 1`;
+  return pg;
 };
 
-let db = await dbClient();
+const db = await dbClient();
 export default db;

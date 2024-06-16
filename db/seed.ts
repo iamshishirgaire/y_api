@@ -3,7 +3,6 @@ import chalk from "chalk";
 import ora from "ora";
 import { faker } from "@faker-js/faker";
 import { v4 as uuidv4 } from "uuid";
-import Users from "../generated/public/Users";
 
 const seedDatabase = async () => {
   const sql = postgres(process.env.DATABASE_URL as string);
@@ -20,33 +19,32 @@ const seedDatabase = async () => {
     users.push({
       id: uuidv4(),
       username: faker.internet.userName(),
-      password: faker.internet.password(),
       email: faker.internet.email(),
       bio: faker.lorem.paragraph(),
-      firstName: faker.name.firstName(),
-      lastName: faker.name.lastName(),
-      country: faker.address.country(),
+      first_name: faker.person.firstName(),
+      last_name: faker.person.lastName(),
+      country: faker.location.country(),
       dob: faker.date.past(30, new Date("2000-01-01")),
-      profilePicture: faker.internet.avatar(),
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      profile_picture: faker.image.avatar(),
+      created_at: new Date(),
+      updated_at: new Date(),
     });
   }
 
   const seedUsers = `
     INSERT INTO users (
-      id, username, password, email, bio, firstName, lastName, country, dob, profilePicture, createdAt, updatedAt
+      id, username, email, bio, first_name, last_name, country, dob, profile_picture, created_at, updated_at
     ) VALUES
     ${users
       .map(
         (user) => `(
-          '${user.id}', '${user.username}', '${user.password}', '${
-          user.email
-        }', '${user.bio}', '${user.firstName}', '${user.lastName}', '${
+          '${user.id}', '${user.username}', '${user.email}', '${user.bio}', '${
+          user.first_name
+        }', '${user.last_name}', '${
           user.country
         }', '${user.dob.toISOString()}', '${
-          user.profilePicture
-        }', '${user.createdAt.toISOString()}', '${user.updatedAt.toISOString()}'
+          user.profile_picture
+        }', '${user.created_at.toISOString()}', '${user.updated_at.toISOString()}'
         )`
       )
       .join(", ")}
@@ -55,37 +53,37 @@ const seedDatabase = async () => {
 
   await sql.unsafe(seedUsers);
 
-  let Ids = await sql<
+  const Ids = await sql<
     {
       id: string;
     }[]
   >`SELECT id FROM users;`;
-  let userIds = Ids.map((row) => row.id);
+  const userIds = Ids.map((row) => row.id);
 
   const tweets = [];
   for (let i = 0; i < 10; i++) {
     tweets.push({
       id: uuidv4(),
       content: faker.lorem.paragraph(),
-      mediaUrl: Array.from({ length: Math.floor(Math.random() * 3) }, () =>
+      media_url: Array.from({ length: Math.floor(Math.random() * 3) }, () =>
         faker.internet.url()
       ),
-      createdAt: new Date(),
-      userId: userIds[Math.floor(Math.random() * userIds.length)],
+      created_at: new Date(),
+      user_id: userIds[Math.floor(Math.random() * userIds.length)],
       visibility: faker.helpers.arrayElement(["public", "private"]),
     });
   }
 
   const seedTweets = `
     INSERT INTO tweets (
-      id, content, mediaUrl, createdAt, userId, visibility
+      id, content, media_url, created_at, user_id, visibility
     ) VALUES
     ${tweets
       .map(
         (tweet) => `(
-          '${tweet.id}', '${tweet.content}', '{${tweet.mediaUrl.join(
+          '${tweet.id}', '${tweet.content}', '{${tweet.media_url.join(
           ","
-        )}}', '${tweet.createdAt.toISOString()}', '${tweet.userId}', '${
+        )}}', '${tweet.created_at.toISOString()}', '${tweet.user_id}', '${
           tweet.visibility
         }'
         )`

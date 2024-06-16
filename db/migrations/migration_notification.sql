@@ -1,13 +1,13 @@
-CREATE TYPE notificationType AS ENUM ('verified', 'mentions');
-CREATE TYPE contentType AS ENUM ('tweet', 'poll');
+CREATE TYPE notification_type AS ENUM ('verified', 'mentions');
+CREATE TYPE content_type AS ENUM ('tweet', 'poll');
 
 CREATE TABLE notifications (
     id UUID PRIMARY KEY,
-    notifType notificationType NOT NULL,
-    postType contentType NOT NULL,
-    contentId UUID,
+    notif_type notification_type NOT NULL,
+    post_type content_type NOT NULL,
+    content_id UUID,
     message TEXT,
-    userId UUID REFERENCES users(id),
+    user_id UUID REFERENCES users(id) ON DELETE CASCADE,
     seen BOOLEAN DEFAULT FALSE,
-    createdAt TIMESTAMP NOT NULL default CURRENT_TIMESTAMP
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

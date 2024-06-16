@@ -10,19 +10,17 @@ export const userQuerySchema = z
     path: ["query"],
   });
 
-
 export const updateUserSchema = z.object({
   username: z.string().max(255).optional(),
   id: z.string().uuid(),
   email: z.string().email().max(255).optional(),
   bio: z.string().optional(),
-  firstName: z.string().max(255).optional(),
-  lastName: z.string().max(255).optional(),
+  first_name: z.string().max(255).optional(), // Changed to snake_case
+  last_name: z.string().max(255).optional(), // Changed to snake_case
   country: z.string().max(255).optional(),
-  dob: z.string().optional(), // or z.date().optional() depending on how you handle dates
-  profilePicture: z.string().max(255).optional(),
+  dob: z.date().optional(),
+  profile_picture: z.string().max(255).optional(), // Changed to snake_case
   verified: z.boolean().optional(),
 });
-
 
 export type UpdateUserInput = z.infer<typeof updateUserSchema>;
