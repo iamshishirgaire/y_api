@@ -22,6 +22,8 @@ export default interface Tweets {
   userid: UsersId | null;
 
   visibility: Visibility;
+
+  updatedAt: Date;
 }
 
 /** Represents the initializer for the table public.tweets */
@@ -41,6 +43,9 @@ export interface TweetsInitializer {
 
   /** Default value: 'public'::visibility */
   visibility?: Visibility;
+
+  /** Default value: now() */
+  updatedAt?: Date;
 }
 
 /** Represents the mutator for the table public.tweets */
@@ -58,4 +63,6 @@ export interface TweetsMutator {
   userid?: UsersId | null;
 
   visibility?: Visibility;
+
+  updatedAt?: Date;
 }

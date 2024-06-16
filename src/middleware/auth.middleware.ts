@@ -1,8 +1,8 @@
 // middlewares/auth.ts
 import { createMiddleware } from "hono/factory";
-import { validateToken } from "../utils/jwt";
 import { HTTPException } from "hono/http-exception";
 import { publicRoutes } from "../public.routes";
+import { validateToken } from "../utils/jwt";
 
 export const validateAuth = createMiddleware(async (c, next) => {
   const absolutePath = c.req.path.split("/api/v1/")[1];

@@ -1,18 +1,18 @@
-import { Context, Env } from "hono";
-import { ZodError } from "zod";
+import type { Context, Env } from "hono";
 import { HTTPException } from "hono/http-exception";
+import type { ZodError } from "zod";
 
 type c = Context<Env, string, {}>;
 type result =
   | {
-      success: true;
-      data: any;
-    }
+    success: true;
+    data: any;
+  }
   | {
-      success: false;
-      error: ZodError<any>;
-      data: any;
-    };
+    success: false;
+    error: ZodError<any>;
+    data: any;
+  };
 
 export function onErrorMsg(result: result, c: c) {
   if (!result.success) {
