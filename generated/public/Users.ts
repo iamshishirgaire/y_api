@@ -8,15 +8,15 @@ export type UsersId = string & { __brand: 'UsersId' };
 export default interface Users {
   id: UsersId;
 
-  username: string;
+  user_name: string;
 
   email: string;
 
   bio: string | null;
 
-  firstname: string | null;
+  first_name: string | null;
 
-  lastname: string | null;
+  last_name: string | null;
 
   country: string | null;
 
@@ -26,28 +26,28 @@ export default interface Users {
 
   followers: number;
 
-  profilepicture: string | null;
-
-  createdat: Date;
-
-  updatedat: Date;
+  profile_picture: string | null;
 
   verified: boolean | null;
+
+  created_at: Date;
+
+  updated_at: Date;
 }
 
 /** Represents the initializer for the table public.users */
 export interface UsersInitializer {
   id: UsersId;
 
-  username: string;
+  user_name: string;
 
   email: string;
 
   bio?: string | null;
 
-  firstname?: string | null;
+  first_name?: string | null;
 
-  lastname?: string | null;
+  last_name?: string | null;
 
   country?: string | null;
 
@@ -59,29 +59,31 @@ export interface UsersInitializer {
   /** Default value: 0 */
   followers?: number;
 
-  profilepicture?: string | null;
-
-  createdat: Date;
-
-  updatedat: Date;
+  profile_picture?: string | null;
 
   /** Default value: false */
   verified?: boolean | null;
+
+  /** Default value: CURRENT_TIMESTAMP */
+  created_at?: Date;
+
+  /** Default value: CURRENT_TIMESTAMP */
+  updated_at?: Date;
 }
 
 /** Represents the mutator for the table public.users */
 export interface UsersMutator {
   id?: UsersId;
 
-  username?: string;
+  user_name?: string;
 
   email?: string;
 
   bio?: string | null;
 
-  firstname?: string | null;
+  first_name?: string | null;
 
-  lastname?: string | null;
+  last_name?: string | null;
 
   country?: string | null;
 
@@ -91,11 +93,11 @@ export interface UsersMutator {
 
   followers?: number;
 
-  profilepicture?: string | null;
-
-  createdat?: Date;
-
-  updatedat?: Date;
+  profile_picture?: string | null;
 
   verified?: boolean | null;
+
+  created_at?: Date;
+
+  updated_at?: Date;
 }

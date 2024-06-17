@@ -11,7 +11,7 @@ export type PollId = string & { __brand: 'PollId' };
 export default interface Poll {
   id: PollId;
 
-  userid: UsersId | null;
+  user_id: UsersId | null;
 
   title: string;
 
@@ -21,16 +21,16 @@ export default interface Poll {
 
   visibility: Visibility;
 
-  createdat: Date;
+  created_at: Date;
 
-  updatedat: Date;
+  updated_at: Date;
 }
 
 /** Represents the initializer for the table public.poll */
 export interface PollInitializer {
   id: PollId;
 
-  userid?: UsersId | null;
+  user_id?: UsersId | null;
 
   title: string;
 
@@ -42,17 +42,17 @@ export interface PollInitializer {
   visibility?: Visibility;
 
   /** Default value: CURRENT_TIMESTAMP */
-  createdat?: Date;
+  created_at?: Date;
 
   /** Default value: CURRENT_TIMESTAMP */
-  updatedat?: Date;
+  updated_at?: Date;
 }
 
 /** Represents the mutator for the table public.poll */
 export interface PollMutator {
   id?: PollId;
 
-  userid?: UsersId | null;
+  user_id?: UsersId | null;
 
   title?: string;
 
@@ -62,7 +62,7 @@ export interface PollMutator {
 
   visibility?: Visibility;
 
-  createdat?: Date;
+  created_at?: Date;
 
-  updatedat?: Date;
+  updated_at?: Date;
 }

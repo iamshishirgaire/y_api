@@ -11,10 +11,8 @@ import { onErrorMsg } from "../../utils/zodValidationMessage";
 import { UserService } from "../user/user.service";
 import { authGoogleSigninSchema } from "./auth.schema";
 import { AuthService } from "./auth.service";
+import type { Variables } from "../../utils/authVariables";
 
-type Variables = {
-  userId: string;
-};
 export const authRoute = new Hono<{ Variables: Variables }>();
 const authService = new AuthService();
 const userService = new UserService();

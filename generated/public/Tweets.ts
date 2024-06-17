@@ -13,17 +13,17 @@ export default interface Tweets {
 
   content: string;
 
-  mediaurl: string[] | null;
+  media_url: string[] | null;
 
-  createdat: Date;
+  created_at: Date;
+
+  updated_at: Date;
 
   edited: boolean | null;
 
-  userid: UsersId | null;
+  user_id: UsersId | null;
 
   visibility: Visibility;
-
-  updatedAt: Date;
 }
 
 /** Represents the initializer for the table public.tweets */
@@ -32,20 +32,21 @@ export interface TweetsInitializer {
 
   content: string;
 
-  mediaurl?: string[] | null;
+  media_url?: string[] | null;
 
-  createdat: Date;
+  /** Default value: CURRENT_TIMESTAMP */
+  created_at?: Date;
+
+  /** Default value: CURRENT_TIMESTAMP */
+  updated_at?: Date;
 
   /** Default value: false */
   edited?: boolean | null;
 
-  userid?: UsersId | null;
+  user_id?: UsersId | null;
 
   /** Default value: 'public'::visibility */
   visibility?: Visibility;
-
-  /** Default value: now() */
-  updatedAt?: Date;
 }
 
 /** Represents the mutator for the table public.tweets */
@@ -54,15 +55,15 @@ export interface TweetsMutator {
 
   content?: string;
 
-  mediaurl?: string[] | null;
+  media_url?: string[] | null;
 
-  createdat?: Date;
+  created_at?: Date;
+
+  updated_at?: Date;
 
   edited?: boolean | null;
 
-  userid?: UsersId | null;
+  user_id?: UsersId | null;
 
   visibility?: Visibility;
-
-  updatedAt?: Date;
 }
