@@ -11,7 +11,7 @@ export const userQuerySchema = z
   });
 
 export const updateUserSchema = z.object({
-  username: z.string().max(255).optional(),
+  user_name: z.string().max(255).optional(),
   id: z.string().uuid(),
   email: z.string().email().max(255).optional(),
   bio: z.string().optional(),

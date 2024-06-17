@@ -33,7 +33,7 @@ authRoute
           id: string;
           email: string;
         };
-        if (user.email) {
+        if (user?.email) {
           usr = user;
         } else {
           usr = await userService.create(data);

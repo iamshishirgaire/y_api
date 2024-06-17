@@ -23,10 +23,10 @@ export class UserService {
     const id = uuidv4();
     const user = {
       id: id,
-      userName: faker.internet.userName(),
-      firstName: response.given_name,
-      lastName: response.family_name,
-      profilePicture: response.picture,
+      user_name: faker.internet.userName(),
+      first_name: response.given_name,
+      last_name: response.family_name,
+      profile_picture: response.picture,
       email: response.email,
       created_at: new Date(),
       updated_at: new Date(),

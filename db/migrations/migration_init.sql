@@ -1,6 +1,6 @@
 CREATE TABLE users (
     id UUID PRIMARY KEY,
-    username VARCHAR(255) NOT NULL,
+    user_name TEXT NOT NULL,
     email VARCHAR(255) NOT NULL,
     bio TEXT,
     first_name VARCHAR(255),

@@ -18,7 +18,7 @@ const seedDatabase = async () => {
   for (let i = 0; i < 10; i++) {
     users.push({
       id: uuidv4(),
-      username: faker.internet.userName(),
+      user_name: faker.internet.userName(),
       email: faker.internet.email(),
       bio: faker.lorem.paragraph(),
       first_name: faker.person.firstName(),
@@ -33,12 +33,12 @@ const seedDatabase = async () => {
 
   const seedUsers = `
     INSERT INTO users (
-      id, username, email, bio, first_name, last_name, country, dob, profile_picture, created_at, updated_at
+      id, user_name, email, bio, first_name, last_name, country, dob, profile_picture, created_at, updated_at
     ) VALUES
     ${users
       .map(
         (user) => `(
-          '${user.id}', '${user.username}', '${user.email}', '${user.bio}', '${
+          '${user.id}', '${user.user_name}', '${user.email}', '${user.bio}', '${
           user.first_name
         }', '${user.last_name}', '${
           user.country
