@@ -27,7 +27,6 @@ userRoute
   .patch("/", zValidator("json", updateUserSchema, onErrorMsg), async (c) => {
     const body = c.req.valid("json");
     const id = c.get("userId");
-    console.log("id", id);
     if (id !== body.id) {
       throw new HTTPException(403, {
         message: "You are not authorized to update this user",
