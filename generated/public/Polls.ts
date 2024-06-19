@@ -4,14 +4,14 @@
 import { type UsersId } from './Users';
 import { type default as Visibility } from './Visibility';
 
-/** Identifier type for public.poll */
-export type PollId = string & { __brand: 'PollId' };
+/** Identifier type for public.polls */
+export type PollsId = string & { __brand: 'PollsId' };
 
-/** Represents the table public.poll */
-export default interface Poll {
-  id: PollId;
+/** Represents the table public.polls */
+export default interface Polls {
+  id: PollsId;
 
-  user_id: UsersId;
+  user_id: UsersId | null;
 
   title: string;
 
@@ -26,11 +26,11 @@ export default interface Poll {
   updated_at: Date;
 }
 
-/** Represents the initializer for the table public.poll */
-export interface PollInitializer {
-  id: PollId;
+/** Represents the initializer for the table public.polls */
+export interface PollsInitializer {
+  id: PollsId;
 
-  user_id: UsersId;
+  user_id?: UsersId | null;
 
   title: string;
 
@@ -48,11 +48,11 @@ export interface PollInitializer {
   updated_at?: Date;
 }
 
-/** Represents the mutator for the table public.poll */
-export interface PollMutator {
-  id?: PollId;
+/** Represents the mutator for the table public.polls */
+export interface PollsMutator {
+  id?: PollsId;
 
-  user_id?: UsersId;
+  user_id?: UsersId | null;
 
   title?: string;
 

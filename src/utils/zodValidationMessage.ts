@@ -18,7 +18,7 @@ type result =
 export function onErrorMsg(result: result, c: c) {
   if (!result.success) {
     throw new HTTPException(400, {
-      message: result.error.errors.map((e) => e.message).join(", "),
+      message: JSON.stringify(result.error.errors),
     });
   }
 }

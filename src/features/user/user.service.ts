@@ -41,27 +41,12 @@ export class UserService {
   }
 
   public async update(parsedData: UpdateUserInput): Promise<void> {
-    const id = parsedData.id;
-    const fields = Object.keys(parsedData);
-    const values = Object.values(parsedData);
-
-    if (fields.length === 0) {
-      throw new Error("No valid fields to update");
-    }
-    const setClause = fields
-      .map((field, index) => `"${field}" = $${index + 1}`)
-      .join(", ");
-    const query = `UPDATE users SET ${setClause}, "updated_at" = CURRENT_TIMESTAMP WHERE id = $${
-      fields.length + 1
-    }`;
-
-    try {
-      await db.unsafe(query, [...values, id]);
-      console.log("User updated successfully");
-    } catch (error) {
-      console.error("Error updating user:", error);
-      throw error;
-    }
+    const { id, ...rest } = parsedData;
+    const updateData = {
+      ...rest,
+      updated_at: new Date(),
+    };
+    await db`update users set ${db(updateData)} where users.id = ${id}`;
   }
 
   public async delete(id: string): Promise<void> {

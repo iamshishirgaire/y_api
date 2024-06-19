@@ -6,6 +6,5 @@ function verifyRole(role: string, requiredRole: UserRole[] | UserRole) {
   } else {
     if (role === requiredRole) return true;
   }
-
   throw new Error("You are not authorized to perform this action");
 }

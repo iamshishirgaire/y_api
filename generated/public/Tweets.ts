@@ -21,7 +21,7 @@ export default interface Tweets {
 
   edited: boolean | null;
 
-  user_id: UsersId | null;
+  user_id: UsersId;
 
   visibility: Visibility;
 }
@@ -43,7 +43,7 @@ export interface TweetsInitializer {
   /** Default value: false */
   edited?: boolean | null;
 
-  user_id?: UsersId | null;
+  user_id: UsersId;
 
   /** Default value: 'public'::visibility */
   visibility?: Visibility;
@@ -63,7 +63,7 @@ export interface TweetsMutator {
 
   edited?: boolean | null;
 
-  user_id?: UsersId | null;
+  user_id?: UsersId;
 
   visibility?: Visibility;
 }

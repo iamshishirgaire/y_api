@@ -14,12 +14,22 @@ app.use(logger());
 app.use(cors());
 
 app.onError((err, c) => {
-  if (err instanceof HTTPException) {
-    return err.getResponse();
+  let message: { message: string };
+  try {
+    message = JSON.parse(err.message);
+  } catch (error) {
+    message = { message: err.message };
   }
+
+  if (err instanceof HTTPException) {
+    c.status(err.status);
+    return c.json(message);
+  }
+
+  c.status(500);
   return c.json({
-    message: "Internal Server Error",
-    error: err,
+    message: "Internal server error",
+    error: message,
   });
 });
 

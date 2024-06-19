@@ -11,16 +11,15 @@ export const userQuerySchema = z
   });
 
 export const updateUserSchema = z.object({
-  user_name: z.string().max(255).optional(),
   id: z.string().uuid(),
+  user_name: z.string().max(255).optional(),
   email: z.string().email().max(255).optional(),
   bio: z.string().optional(),
-  first_name: z.string().max(255).optional(), // Changed to snake_case
-  last_name: z.string().max(255).optional(), // Changed to snake_case
+  first_name: z.string().max(255).optional(),
+  last_name: z.string().max(255).optional(),
   country: z.string().max(255).optional(),
   dob: z.date().optional(),
-  profile_picture: z.string().max(255).optional(), // Changed to snake_case
-  verified: z.boolean().optional(),
+  profile_picture: z.string().max(255).optional(),
 });
 
 export type UpdateUserInput = z.infer<typeof updateUserSchema>;

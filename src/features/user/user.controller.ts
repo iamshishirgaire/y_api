@@ -4,6 +4,7 @@ import { HTTPException } from "hono/http-exception";
 import { onErrorMsg } from "../../utils/zodValidationMessage";
 import { updateUserSchema, userQuerySchema } from "./user.schema";
 import { UserService } from "./user.service";
+import { verifyAuth } from "../../utils/verifyAuth";
 
 type Variables = {
   userId: string;
@@ -11,6 +12,7 @@ type Variables = {
 export const userRoute = new Hono<{ Variables: Variables }>();
 
 const userService = new UserService();
+
 userRoute
   .get("/", zValidator("query", userQuerySchema, onErrorMsg), async (c) => {
     const query = c.req.valid("query");
@@ -27,11 +29,7 @@ userRoute
   .patch("/", zValidator("json", updateUserSchema, onErrorMsg), async (c) => {
     const body = c.req.valid("json");
     const id = c.get("userId");
-    if (id !== body.id) {
-      throw new HTTPException(403, {
-        message: "You are not authorized to update this user",
-      });
-    }
+    verifyAuth(body.id, id);
     try {
       await userService.update(body);
       c.status(201);
