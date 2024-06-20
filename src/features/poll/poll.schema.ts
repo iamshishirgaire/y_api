@@ -5,10 +5,13 @@ const VisibilityEnum = z.enum(["public", "private"]);
 export const GetPollSchema = z.object({
   id: z.string().uuid(),
 });
+export const GetPollByUsersSchema = z.object({
+  userId: z.string().uuid(),
+});
+
 export const CreatePollSchema = z.object({
-  title: z.string().min(1),
-  description: z.string().optional(),
-  options: z.array(z.string()).min(2),
+  description: z.string().min(1),
+  options: z.array(z.string()).min(2).max(5),
   visibility: VisibilityEnum.default("public"),
 });
 

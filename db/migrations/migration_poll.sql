@@ -1,18 +1,9 @@
-CREATE TABLE poll (
+CREATE TABLE polls (
     id UUID PRIMARY KEY,
     user_id UUID REFERENCES users(id)  ON DELETE CASCADE NOT NULL,
-    title TEXT NOT NULL,
     description TEXT,
     options TEXT[] NOT NULL,
     visibility visibility NOT NULL DEFAULT 'public',
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
-CREATE TABLE poll_results (
-    id UUID PRIMARY KEY,
-    poll_id UUID REFERENCES poll(id) ON DELETE CASCADE,
-    user_id UUID REFERENCES users(id)  ON DELETE CASCADE NOT NULL,
-    vote_option INT NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

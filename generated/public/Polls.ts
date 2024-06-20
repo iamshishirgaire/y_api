@@ -11,9 +11,7 @@ export type PollsId = string & { __brand: 'PollsId' };
 export default interface Polls {
   id: PollsId;
 
-  user_id: UsersId | null;
-
-  title: string;
+  user_id: UsersId;
 
   description: string | null;
 
@@ -30,9 +28,7 @@ export default interface Polls {
 export interface PollsInitializer {
   id: PollsId;
 
-  user_id?: UsersId | null;
-
-  title: string;
+  user_id: UsersId;
 
   description?: string | null;
 
@@ -52,9 +48,7 @@ export interface PollsInitializer {
 export interface PollsMutator {
   id?: PollsId;
 
-  user_id?: UsersId | null;
-
-  title?: string;
+  user_id?: UsersId;
 
   description?: string | null;
 
