@@ -1,0 +1,11 @@
+CREATE TABLE comments (
+    id UUID PRIMARY KEY,
+    content TEXT NOT NULL,
+    media_url TEXT [],
+    tweet_id UUID REFERENCES tweets(id) ON DELETE CASCADE,
+    poll_id UUID REFERENCES polls(id) ON DELETE CASCADE,
+    user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+    reply_to_id UUID REFERENCES comments(id) ON DELETE CASCADE,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

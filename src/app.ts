@@ -8,6 +8,7 @@ import { messageRoute } from "./features/message/message.controller";
 import { feedRoute } from "./features/feed/feed.controller";
 import { likeRoute } from "./features/like/like.controller";
 import { commentRoute } from "./features/comment/comment.controller";
+import { reportRoute } from "./features/report/report.controller";
 //handlers
 export const routes = (app: Hono) => {
   app.route("/auth", authRoute);
@@ -19,4 +20,5 @@ export const routes = (app: Hono) => {
   app.route("/feed", feedRoute);
   app.route("/like", likeRoute);
   app.route("/comment", commentRoute);
+  app.route("/report", reportRoute);
 };
