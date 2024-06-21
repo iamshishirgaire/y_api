@@ -16,27 +16,11 @@ export const tweetRoute = new Hono<{ Variables: Variables }>();
 const tweetService = new TweetService();
 tweetRoute
   .get("/all", async (c) => {
-    try {
-      const tweets = await tweetService.findAll(10, 0);
-      return c.json(tweets);
-    } catch (error) {
-      console.log(error);
-      throw new HTTPException(404, {
-        message: "Failed to fecth Tweets",
-      });
-    }
+    return c.json(await tweetService.findAll(10, 0));
   })
   .get("/:id", zValidator("param", getTweetSchema, onErrorMsg), async (c) => {
     const { id } = c.req.valid("param");
-    try {
-      const tweet = await tweetService.findOne(id);
-      return c.json(tweet);
-    } catch (error) {
-      console.log(error);
-      throw new HTTPException(404, {
-        message: "Failed to fetch Tweet",
-      });
-    }
+    return c.json(await tweetService.findOne(id));
   })
   .post("/", zValidator("json", CreateTweetSchema, onErrorMsg), async (c) => {
     const createData = c.req.valid("json");

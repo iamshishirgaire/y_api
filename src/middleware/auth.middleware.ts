@@ -30,6 +30,7 @@ export const validateAuth = createMiddleware(async (c, next) => {
   try {
     const decoded = validateToken(token);
     c.set("userId", decoded.userId);
+    console.log("User ID: ", decoded.userId);
     await next();
   } catch (error: unknown) {
     //check if error is jwt expired error

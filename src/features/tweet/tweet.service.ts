@@ -1,3 +1,4 @@
+import { HTTPException } from "hono/http-exception";
 import db from "../../../db";
 import type Tweets from "../../../generated/public/Tweets";
 import type { CreateTweet, UpdateTweet } from "./tweet.schema";
@@ -5,22 +6,39 @@ import { v4 as uuidv4 } from "uuid";
 
 export class TweetService {
   public async findAll(limit: number, offset: number): Promise<Tweets[]> {
-    const tweets = await db<Tweets[]>`
-      SELECT * FROM tweets
-      where visibility = 'public'
-      ORDER BY created_at DESC
-      LIMIT ${limit}
-      OFFSET ${offset}
-    `;
-    return tweets;
+    try {
+      const tweets = await db<Tweets[]>`
+        SELECT * FROM tweets
+        where visibility = 'public'
+        ORDER BY created_at DESC
+        LIMIT ${limit}
+        OFFSET ${offset}
+      `;
+      return tweets;
+    } catch (error) {
+      throw new HTTPException(500, {
+        message: "Failed to fetch tweets",
+      });
+    }
   }
 
   public async findOne(id: string): Promise<Tweets> {
-    const tweets = await db<Tweets[]>`
-      SELECT * FROM tweets
-      WHERE id = ${id} AND visibility = 'public'
-    `;
-    return tweets[0] ?? {};
+    try {
+      const tweets = await db<Tweets[]>`
+       SELECT * FROM tweets
+       WHERE id = ${id} AND visibility = 'public'
+     `;
+      if (tweets.length === 0) {
+        throw new HTTPException(404, {
+          message: "Tweet not found",
+        });
+      }
+      return tweets[0];
+    } catch (error) {
+      throw new HTTPException(500, {
+        message: "Failed to fetch tweet",
+      });
+    }
   }
 
   public async create(data: CreateTweet, uid: string) {

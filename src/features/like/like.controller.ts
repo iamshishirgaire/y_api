@@ -1,25 +1,32 @@
-
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
-import { likeSchema } from "./like.schema";
 import { onErrorMsg } from "../../utils/zodValidationMessage";
+import {
+  CreateLikeSchema,
+  DeleteLikeSchema,
+  IsLikedByMeSchema,
+} from "./like.schema";
+import { LikeService } from "./like.service";
 export const likeRoute = new Hono();
 
-likeRoute
-  .get("/",zValidator("param",likeSchema,onErrorMsg) ,(c) => {
-    return c.json({
-      message: "like GET ROUTE",
-      
-    });
-  })
-  .post("/", (c) => {
-    return c.json({
-      message: "like POST ROUTE",
-    });
-  })
-  .patch("/", (c) => {
-    return c.json({
-      message: "like PATCH ROUTE",
-    });
-  });
+const likeService = new LikeService();
 
+likeRoute
+  .get("/", zValidator("query", IsLikedByMeSchema, onErrorMsg), async (c) => {
+    const reqData = c.req.valid("query");
+    return c.json(
+      await likeService.getIsLikedByMe(reqData.user_id, reqData.tweet_id)
+    );
+  })
+  .post("/", zValidator("query", CreateLikeSchema, onErrorMsg), async (c) => {
+    const reqData = c.req.valid("query");
+    return c.json(
+      await likeService.likeTweet(reqData.user_id, reqData.tweet_id)
+    );
+  })
+  .delete("/", zValidator("query", DeleteLikeSchema, onErrorMsg), async (c) => {
+    const reqData = c.req.valid("query");
+    return c.json(
+      await likeService.dislikeTweet(reqData.user_id, reqData.tweet_id)
+    );
+  });
