@@ -14,7 +14,7 @@ TASKS :
 - [x] Tweets Module
 - [x] Polls Module
 - [x] Likes and comments Module
-- [ ] Direct Message Module
+- [x] Direct Message Module
 - [ ] Feeds Module
 - [ ] Realtime Messaging(w websockets)
 - [ ] Realtime Notifications (w websockets)
