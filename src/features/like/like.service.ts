@@ -18,7 +18,7 @@ export class LikeService {
       id: uuidv4(),
       user_id: user_id,
       tweet_id: tweet_id,
-      created_at: new Date().toISOString(),
+      created_at: new Date(),
     };
     try {
       await db.begin(async (sql) => {

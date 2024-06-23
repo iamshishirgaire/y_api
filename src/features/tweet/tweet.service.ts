@@ -46,8 +46,8 @@ export class TweetService {
       id: uuidv4(),
       ...data,
       user_id: uid,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
+      created_at: new Date(),
+      updated_at: new Date(),
     };
     await db`insert into tweets ${db(tweetData)}`;
     return tweetData;
@@ -58,7 +58,7 @@ export class TweetService {
     const tweetData = {
       ...rest,
       edited: true,
-      updated_at: new Date().toISOString(),
+      updated_at: new Date(),
     };
     await db`
       UPDATE tweets

@@ -20,7 +20,7 @@ export default interface Notifications {
 
   message: string | null;
 
-  user_id: UsersId | null;
+  user_id: UsersId;
 
   seen: boolean | null;
 
@@ -39,7 +39,7 @@ export interface NotificationsInitializer {
 
   message?: string | null;
 
-  user_id?: UsersId | null;
+  user_id: UsersId;
 
   /** Default value: false */
   seen?: boolean | null;
@@ -60,7 +60,7 @@ export interface NotificationsMutator {
 
   message?: string | null;
 
-  user_id?: UsersId | null;
+  user_id?: UsersId;
 
   seen?: boolean | null;
 

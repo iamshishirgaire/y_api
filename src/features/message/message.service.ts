@@ -1,21 +1,120 @@
+import { HTTPException } from "hono/http-exception";
+import db from "../../../db";
+import { v4 as uuidv4 } from "uuid";
+import type {
+  CreateMessage,
+  CreateMessageChannel,
+  DeleteMessage,
+  GetMessageChannels,
+  GetMessages,
+  UpdateMessage,
+} from "./message.schema";
+import type Messages from "../../../generated/public/Messages";
+import { getChannelId } from "../../utils/getChannelId";
+import type MessageChannels from "../../../generated/public/MessageChannels";
+
 export class MessageService {
-  public async findAll(): Promise<void> {
-    // Your logic here
+  public async findAll(data: GetMessages) {
+    try {
+      const res = await db<Messages[]>`
+    SELECT * FROM messages WHERE channel_id = ${data.channel_id}
+    ORDER BY created_at DESC
+    LIMIT ${data.page_size} OFFSET ${data.page_size * data.page}
+    `;
+      return res;
+    } catch (error) {
+      throw new HTTPException(500, {
+        message: "Failed to fetch messages",
+      });
+    }
   }
 
-  public async findOne(): Promise<void> {
-    // Your logic here
+  public async findAllChannels(data: GetMessageChannels) {
+    try {
+      const res = await db<
+        MessageChannels[]
+      >`SELECT * FROM channels WHERE sender_id = ${data.user_id} 
+      OR receiver_id = ${data.user_id}
+      ORDER BY created_at DESC  
+      LIMIT ${data.page_size} OFFSET ${data.page_size * data.page}
+      `;
+      return res;
+    } catch (error) {
+      throw new HTTPException(500, {
+        message: "Failed to fetch chats",
+      });
+    }
   }
 
-  public async create(): Promise<void> {
-    // Your logic here
+  public async createChannel(data: CreateMessageChannel) {
+    try {
+      const channelData = {
+        id: getChannelId(data.sender_id, data.receiver_id),
+        ...data,
+        created_at: new Date(),
+        updated_at: new Date(),
+      };
+      const channel = await db`
+      INSERT INTO message_channels ${db(channelData)}
+      RETURNING *
+      `;
+
+      return channel;
+    } catch (error) {
+      throw new HTTPException(500, {
+        message: "Failed to fetch chats",
+      });
+    }
   }
 
-  public async update(): Promise<void> {
-    // Your logic here
+  public async create(data: CreateMessage) {
+    try {
+      const messageData = {
+        id: uuidv4(),
+        ...data,
+        created_at: new Date(),
+        updated_at: new Date(),
+      };
+      await db`
+      INSERT INTO messages ${db(messageData)}`;
+      return {
+        message: "Message created successfully",
+      };
+    } catch (error) {
+      throw new HTTPException(500, {
+        message: "Failed to create message",
+      });
+    }
   }
 
-  public async delete(): Promise<void> {
-    // Your logic here
+  public async update(data: UpdateMessage) {
+    try {
+      const messageData = {
+        ...data,
+        updated_at: new Date(),
+      };
+      await db`
+      INSERT INTO messages ${db(messageData)}`;
+      return {
+        message: "Message created successfully",
+      };
+    } catch (error) {
+      throw new HTTPException(500, {
+        message: "Failed to create message",
+      });
+    }
+  }
+
+  public async delete(data: DeleteMessage) {
+    try {
+      await db`DELETE FROM messages WHERE id = ${data.id}`;
+      return {
+        message: "Message deleted successfully",
+      };
+    } catch (error) {
+      throw new HTTPException(500, {
+        message: "Failed to delete message",
+      });
+    }
   }
 }

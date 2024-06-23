@@ -11,8 +11,13 @@ TASKS :
 - [x] Script to generate typescript types from pg tables
 - [x] User Module
 - [x] Auth module : Google Authentication
-- [ ] Ratelimiting (w @upstash/redis)
-- [ ] Tweets Module
-- [ ] Polls Module
+- [x] Tweets Module
+- [x] Polls Module
+- [x] Likes and comments Module
 - [ ] Direct Message Module
+- [ ] Feeds Module
+- [ ] Realtime Messaging(w websockets)
+- [ ] Realtime Notifications (w websockets)
+- [ ] Scaling WS (w @upstash/redis)
+- [ ] Ratelimiting (w @upstash/redis)
 

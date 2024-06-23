@@ -3,6 +3,7 @@
 
 import { type TweetsId } from './Tweets';
 import { type PollsId } from './Polls';
+import { type UsersId } from './Users';
 
 /** Identifier type for public.comments */
 export type CommentsId = string & { __brand: 'CommentsId' };
@@ -19,7 +20,7 @@ export default interface Comments {
 
   poll_id: PollsId | null;
 
-  user_id: PollsId | null;
+  user_id: UsersId | null;
 
   reply_to_id: CommentsId | null;
 
@@ -40,7 +41,7 @@ export interface CommentsInitializer {
 
   poll_id?: PollsId | null;
 
-  user_id?: PollsId | null;
+  user_id?: UsersId | null;
 
   reply_to_id?: CommentsId | null;
 
@@ -63,7 +64,7 @@ export interface CommentsMutator {
 
   poll_id?: PollsId | null;
 
-  user_id?: PollsId | null;
+  user_id?: UsersId | null;
 
   reply_to_id?: CommentsId | null;
 
