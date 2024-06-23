@@ -18,12 +18,13 @@ export class MessageService {
     try {
       const res = await db<Messages[]>`
     SELECT * FROM messages WHERE channel_id = ${data.channel_id}
-    and ${userId} = ANY(users)
+    AND sender_id = ${userId} OR receiver_id = ${userId}
     ORDER BY created_at DESC
     LIMIT ${data.page_size} OFFSET ${data.page_size * data.page}
     `;
       return res;
     } catch (error) {
+      console.log(error);
       throw new HTTPException(500, {
         message: "Failed to fetch messages",
       });
@@ -36,8 +37,8 @@ export class MessageService {
         MessageChannels[]
       >`SELECT * FROM message_channels WHERE ${data.user_id} = ANY(users)
       ORDER BY created_at DESC  
+     LIMIT ${data.page_size} OFFSET ${data.page_size * data.page}
       `;
-      // LIMIT ${data.page_size} OFFSET ${data.page_size * data.page}
       return res;
     } catch (error) {
       console.log(error);
