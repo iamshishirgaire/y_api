@@ -1,13 +1,13 @@
 import { z } from "zod";
 
 export const GetMessagesSchema = z.object({
-  page: z.number(),
-  page_size: z.number(),
+  page: z.string().transform((val) => Number.parseInt(val, 10)),
+  page_size: z.string().transform((val) => Number.parseInt(val, 10)),
   channel_id: z.string(),
 });
 export const GetMessageChannelsSchema = z.object({
-  page: z.number(),
-  page_size: z.number(),
+  page: z.string().transform((val) => Number.parseInt(val, 10)),
+  page_size: z.string().transform((val) => Number.parseInt(val, 10)),
   user_id: z.string().uuid(),
 });
 export const CreateMessageChannelSchema = z.object({
@@ -17,13 +17,14 @@ export const CreateMessageChannelSchema = z.object({
 export const CreateMessageSchema = z.object({
   content: z.string(),
   media_url: z.array(z.string()).optional(),
-  user_id: z.string(),
   channel_id: z.string(),
+  sender_id: z.string().uuid(),
+  receiver_id: z.string().uuid(),
 });
 
 export const UpdateMessageSchema = z.object({
   id: z.string(),
-  content: z.string().optional(),
+  content: z.string().trim(),
 });
 
 export const DeleteMessageSchema = z.object({

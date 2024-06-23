@@ -14,10 +14,11 @@ import { getChannelId } from "../../utils/getChannelId";
 import type MessageChannels from "../../../generated/public/MessageChannels";
 
 export class MessageService {
-  public async findAll(data: GetMessages) {
+  public async findAll(data: GetMessages, userId: string) {
     try {
       const res = await db<Messages[]>`
     SELECT * FROM messages WHERE channel_id = ${data.channel_id}
+    and ${userId} = ANY(users)
     ORDER BY created_at DESC
     LIMIT ${data.page_size} OFFSET ${data.page_size * data.page}
     `;
@@ -33,13 +34,13 @@ export class MessageService {
     try {
       const res = await db<
         MessageChannels[]
-      >`SELECT * FROM channels WHERE sender_id = ${data.user_id} 
-      OR receiver_id = ${data.user_id}
+      >`SELECT * FROM message_channels WHERE ${data.user_id} = ANY(users)
       ORDER BY created_at DESC  
-      LIMIT ${data.page_size} OFFSET ${data.page_size * data.page}
       `;
+      // LIMIT ${data.page_size} OFFSET ${data.page_size * data.page}
       return res;
     } catch (error) {
+      console.log(error);
       throw new HTTPException(500, {
         message: "Failed to fetch chats",
       });
@@ -50,7 +51,7 @@ export class MessageService {
     try {
       const channelData = {
         id: getChannelId(data.sender_id, data.receiver_id),
-        ...data,
+        users: [data.sender_id, data.receiver_id],
         created_at: new Date(),
         updated_at: new Date(),
       };
@@ -61,8 +62,9 @@ export class MessageService {
 
       return channel;
     } catch (error) {
+      console.log(error);
       throw new HTTPException(500, {
-        message: "Failed to fetch chats",
+        message: "Failed to create channel",
       });
     }
   }
@@ -77,9 +79,7 @@ export class MessageService {
       };
       await db`
       INSERT INTO messages ${db(messageData)}`;
-      return {
-        message: "Message created successfully",
-      };
+      return messageData;
     } catch (error) {
       throw new HTTPException(500, {
         message: "Failed to create message",
@@ -87,17 +87,17 @@ export class MessageService {
     }
   }
 
-  public async update(data: UpdateMessage) {
+  public async update(data: UpdateMessage, userId: string) {
     try {
       const messageData = {
         ...data,
         updated_at: new Date(),
       };
       await db`
-      INSERT INTO messages ${db(messageData)}`;
-      return {
-        message: "Message created successfully",
-      };
+      UPDATE messages SET ${db(messageData)} WHERE id = ${data.id}
+      AND sender_id = ${userId}
+      `;
+      return messageData;
     } catch (error) {
       throw new HTTPException(500, {
         message: "Failed to create message",
