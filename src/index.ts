@@ -6,6 +6,7 @@ import { routes } from "./app";
 import { csrf } from "hono/csrf";
 import { HTTPException } from "hono/http-exception";
 import { validateAuth } from "./middleware/auth.middleware";
+import { cache } from "./middleware/cache.middleware";
 
 await testDbClient();
 const app = new Hono().basePath("/api/v1");
@@ -41,3 +42,4 @@ app.get("/status", (c) => {
 app.use(validateAuth);
 routes(app);
 export default app;
+// middlewares/auth.ts

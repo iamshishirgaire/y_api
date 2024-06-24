@@ -7,17 +7,23 @@ import {
   IsLikedByMeSchema,
 } from "./like.schema";
 import { LikeService } from "./like.service";
+import { cache } from "../../middleware/cache.middleware";
 export const likeRoute = new Hono();
 
 const likeService = new LikeService();
 
 likeRoute
-  .get("/", zValidator("query", IsLikedByMeSchema, onErrorMsg), async (c) => {
-    const reqData = c.req.valid("query");
-    return c.json(
-      await likeService.getIsLikedByMe(reqData.user_id, reqData.tweet_id)
-    );
-  })
+  .get(
+    "/",
+    cache(10),
+    zValidator("query", IsLikedByMeSchema, onErrorMsg),
+    async (c) => {
+      const reqData = c.req.valid("query");
+      return c.json(
+        await likeService.getIsLikedByMe(reqData.user_id, reqData.tweet_id)
+      );
+    }
+  )
   .post("/", zValidator("query", CreateLikeSchema, onErrorMsg), async (c) => {
     const reqData = c.req.valid("query");
     return c.json(

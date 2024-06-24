@@ -6,6 +6,8 @@ const envSchema = z.object({
   JWT_SECRET: z.string(),
   JWT_EXPIRES_IN: z.string(),
   JWT_COOKIE_EXPIRES_IN: z.string(),
+  REDIS_URL: z.string(),
+  REDIS_TOKEN: z.string(),
 });
 
 const result = envSchema.safeParse(process.env);

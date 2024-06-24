@@ -16,9 +16,11 @@ TASKS :
 - [x] Likes and comments Module
 - [x] Direct Message Module
 - [x] Follow Module
+- [ ] Mention Module
 - [ ] Feeds Module
 - [ ] Realtime Messaging(w websockets)
 - [ ] Realtime Notifications (w websockets)
 - [ ] Scaling WS (w @upstash/redis)
 - [ ] Ratelimiting (w @upstash/redis)
+- [x] Caching (w @upstash/redis)
 
