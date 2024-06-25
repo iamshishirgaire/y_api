@@ -1,25 +1,19 @@
-
 import { Hono } from "hono";
+import { FeedService } from "./feed.service";
+import type { Variables } from "../../utils/authVariables";
 import { zValidator } from "@hono/zod-validator";
-import { feedSchema } from "./feed.schema";
+import { GetFeedSchema } from "./feed.schema";
 import { onErrorMsg } from "../../utils/zodValidationMessage";
-export const feedRoute = new Hono();
 
-feedRoute
-  .get("/",zValidator("param",feedSchema,onErrorMsg) ,(c) => {
-    return c.json({
-      message: "feed GET ROUTE",
-      
-    });
-  })
-  .post("/", (c) => {
-    return c.json({
-      message: "feed POST ROUTE",
-    });
-  })
-  .patch("/", (c) => {
-    return c.json({
-      message: "feed PATCH ROUTE",
-    });
-  });
+export const feedRoute = new Hono<{ Variables: Variables }>();
+const feedService = new FeedService();
 
+feedRoute.get(
+  "/",
+  zValidator("query", GetFeedSchema, onErrorMsg),
+  async (c) => {
+    const id = c.get("userId");
+    const reqData = c.req.valid("query");
+    return c.json(await feedService.findAll(id, reqData));
+  }
+);

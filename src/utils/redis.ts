@@ -1,7 +1,5 @@
-import { Redis } from "@upstash/redis";
+import { Redis } from "ioredis";
 import env from "./envVariables";
 
-export const redisClient = new Redis({
-  url: env.REDIS_URL,
-  token: env.REDIS_TOKEN,
-});
+const client = new Redis(env.REDIS_URL);
+export const redisClient = client;

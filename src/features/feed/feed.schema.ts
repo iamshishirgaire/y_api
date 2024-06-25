@@ -1,6 +1,8 @@
-import { z } from 'zod';
+import { z } from "zod";
 
-export const feedSchema = z.object({
-  id: z.string(),
- 
+export const GetFeedSchema = z.object({
+  page: z.string().transform((val) => Number.parseInt(val, 10)),
+  page_size: z.string().transform((val) => Number.parseInt(val, 10)),
 });
+
+export type GetFeed = z.infer<typeof GetFeedSchema>;

@@ -1,21 +1,8 @@
+import type { GetFeed } from "./feed.schema";
+
 export class FeedService {
-  public async findAll(): Promise<void> {
+  public async findAll(id: string, data: GetFeed) {
     // Your logic here
-  }
-
-  public async findOne(): Promise<void> {
-    // Your logic here
-  }
-
-  public async create(): Promise<void> {
-    // Your logic here
-  }
-
-  public async update(): Promise<void> {
-    // Your logic here
-  }
-
-  public async delete(): Promise<void> {
-    // Your logic here
+    return id;
   }
 }

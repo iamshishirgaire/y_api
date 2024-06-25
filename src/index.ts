@@ -1,12 +1,12 @@
 import { Hono } from "hono";
-import { logger } from "hono/logger";
-import { testDbClient } from "../db";
 import { cors } from "hono/cors";
-import { routes } from "./app";
 import { csrf } from "hono/csrf";
 import { HTTPException } from "hono/http-exception";
+import { logger } from "hono/logger";
+import { testDbClient } from "../db";
+import { routes } from "./app";
 import { validateAuth } from "./middleware/auth.middleware";
-import { cache } from "./middleware/cache.middleware";
+import { socketHandler, websocket } from "./services/websocket.service";
 
 await testDbClient();
 const app = new Hono().basePath("/api/v1");
@@ -14,6 +14,11 @@ app.use(csrf());
 app.use(logger());
 app.use(cors());
 
+Bun.serve({
+  fetch: app.fetch,
+  websocket: websocket,
+});
+app.get("/ws", validateAuth, socketHandler);
 app.onError((err, c) => {
   let message: { message: string };
   try {
@@ -33,7 +38,6 @@ app.onError((err, c) => {
     error: message,
   });
 });
-
 app.get("/status", (c) => {
   return c.json({
     message: "Server up and running",
@@ -42,4 +46,3 @@ app.get("/status", (c) => {
 app.use(validateAuth);
 routes(app);
 export default app;
-// middlewares/auth.ts
