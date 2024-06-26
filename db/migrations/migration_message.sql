@@ -1,7 +1,3 @@
-drop table if exists messages;
-
-drop table if exists message_channels;
-
 CREATE TABLE message_channels (
     id TEXT PRIMARY KEY,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

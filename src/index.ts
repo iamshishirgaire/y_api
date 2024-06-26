@@ -6,7 +6,6 @@ import { logger } from "hono/logger";
 import { testDbClient } from "../db";
 import { routes } from "./app";
 import { validateAuth } from "./middleware/auth.middleware";
-import { socketHandler, websocket } from "./services/websocket.service";
 
 await testDbClient();
 const app = new Hono().basePath("/api/v1");
@@ -14,11 +13,6 @@ app.use(csrf());
 app.use(logger());
 app.use(cors());
 
-Bun.serve({
-  fetch: app.fetch,
-  websocket: websocket,
-});
-app.get("/ws", validateAuth, socketHandler);
 app.onError((err, c) => {
   let message: { message: string };
   try {
