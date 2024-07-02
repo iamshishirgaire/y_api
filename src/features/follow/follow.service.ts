@@ -35,7 +35,6 @@ export class FollowService {
         id: uuidv4(),
         follower_id: user_id,
         followee_id: data.user_id,
-        created_at: new Date(),
       };
       const res = await db<Followers[]>`INSERT INTO followers ${db(
         followerData

@@ -8,6 +8,7 @@ import {
   UpdateMessageSchema,
   DeleteMessageSchema,
   CreateMessageChannelSchema,
+  GetChannelInfoSchema,
 } from "./message.schema";
 import { MessageService } from "./message.service";
 import type { Variables } from "../../utils/authVariables";
@@ -33,6 +34,15 @@ messageRoute
       return c.json(await messageService.findAllChannels(reqData));
     }
   )
+  .get(
+    "/channel/info",
+    zValidator("query", GetChannelInfoSchema, onErrorMsg),
+    async (c) => {
+      const reqData = c.req.valid("query");
+      const userId = c.get("userId");
+      return c.json(await messageService.getChannelInfo(reqData, userId));
+    }
+  )
   .post(
     "/channel",
     zValidator("query", CreateMessageChannelSchema, onErrorMsg),
@@ -46,8 +56,14 @@ messageRoute
   .post("/", zValidator("json", CreateMessageSchema, onErrorMsg), async (c) => {
     const reqData = c.req.valid("json");
     const userId = c.get("userId");
-    verifyAuth(userId, reqData.sender_id);
-    return c.json(await messageService.create(reqData));
+    const receiver_id = reqData.channel_id.replace(userId, "");
+
+    if (!reqData.channel_id.includes(userId)) {
+      throw new HTTPException(400, {
+        message: "Invalid channel id.",
+      });
+    }
+    return c.json(await messageService.create(reqData, userId, receiver_id));
   })
   .patch(
     "/",

@@ -28,8 +28,8 @@ export class UserService {
       last_name: response.family_name,
       profile_picture: response.picture,
       email: response.email,
-      created_at: new Date(),
-      updated_at: new Date(),
+      created_at: date,
+      updated_at: date,
       following: 0,
       followers: 0,
     };

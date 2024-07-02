@@ -26,8 +26,6 @@ const seedDatabase = async () => {
       country: faker.location.country(),
       dob: faker.date.past(30, new Date("2000-01-01")),
       profile_picture: faker.image.avatar(),
-      created_at: new Date(),
-      updated_at: new Date(),
     });
   }
 
@@ -42,9 +40,7 @@ const seedDatabase = async () => {
           user.first_name
         }', '${user.last_name}', '${
           user.country
-        }', '${user.dob.toISOString()}', '${
-          user.profile_picture
-        }', '${user.created_at.toISOString()}', '${user.updated_at.toISOString()}'
+        }', '${user.dob.toISOString()}', '${user.profile_picture}'
         )`
       )
       .join(", ")}
@@ -68,7 +64,6 @@ const seedDatabase = async () => {
       media_url: Array.from({ length: Math.floor(Math.random() * 3) }, () =>
         faker.internet.url()
       ),
-      created_at: new Date(),
       user_id: userIds[Math.floor(Math.random() * userIds.length)],
       visibility: faker.helpers.arrayElement(["public", "private"]),
     });
@@ -83,9 +78,7 @@ const seedDatabase = async () => {
         (tweet) => `(
           '${tweet.id}', '${tweet.content}', '{${tweet.media_url.join(
           ","
-        )}}', '${tweet.created_at.toISOString()}', '${tweet.user_id}', '${
-          tweet.visibility
-        }'
+        )}}', '${tweet.visibility}'
         )`
       )
       .join(", ")}

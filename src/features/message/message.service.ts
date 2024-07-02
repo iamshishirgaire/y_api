@@ -5,6 +5,7 @@ import type {
   CreateMessage,
   CreateMessageChannel,
   DeleteMessage,
+  GetChannelInfo,
   GetMessageChannels,
   GetMessages,
   UpdateMessage,
@@ -31,12 +32,45 @@ export class MessageService {
     }
   }
 
+  public async getChannelInfo(data: GetChannelInfo, userId: string) {
+    try {
+      //get the last message , last message time, and the other userName and profile picture from the channel
+      const res = await db<MessageChannels[]>`
+        SELECT
+            m.content,
+            m.media_url,
+            m.created_at,
+            m.updated_at,
+            u.first_name AS other_user_name,
+            u.profile_picture AS other_user_profile_picture
+        FROM
+            messages m
+        JOIN
+            users u ON (u.id = m.sender_id OR u.id = m.receiver_id)
+        WHERE
+            m.channel_id = ${data.id}
+            AND (m.sender_id = ${userId} OR m.receiver_id = ${userId})
+            AND u.id != ${userId}
+        ORDER BY
+            m.created_at DESC
+        LIMIT 1;
+
+          `;
+      return res;
+    } catch (error) {
+      console.log(error);
+      throw new HTTPException(500, {
+        message: "Failed to fetch channel info",
+      });
+    }
+  }
+
   public async findAllChannels(data: GetMessageChannels) {
     try {
       const res = await db<
         MessageChannels[]
       >`SELECT * FROM message_channels WHERE ${data.user_id} = ANY(users)
-      ORDER BY created_at DESC  
+      ORDER BY created_at DESC
      LIMIT ${data.page_size} OFFSET ${data.page_size * data.page}
       `;
       return res;
@@ -53,8 +87,6 @@ export class MessageService {
       const channelData = {
         id: getChannelId(data.sender_id, data.receiver_id),
         users: [data.sender_id, data.receiver_id],
-        created_at: new Date(),
-        updated_at: new Date(),
       };
       const channel = await db`
       INSERT INTO message_channels ${db(channelData)}
@@ -70,13 +102,17 @@ export class MessageService {
     }
   }
 
-  public async create(data: CreateMessage) {
+  public async create(
+    data: CreateMessage,
+    sender_id: string,
+    receiver_id: string
+  ) {
     try {
       const messageData = {
         id: uuidv4(),
         ...data,
-        created_at: new Date(),
-        updated_at: new Date(),
+        sender_id,
+        receiver_id,
       };
       await db`
       INSERT INTO messages ${db(messageData)}`;

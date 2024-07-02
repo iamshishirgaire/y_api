@@ -18,8 +18,9 @@ export const CreateMessageSchema = z.object({
   content: z.string(),
   media_url: z.array(z.string()).optional(),
   channel_id: z.string(),
-  sender_id: z.string().uuid(),
-  receiver_id: z.string().uuid(),
+});
+export const GetChannelInfoSchema = z.object({
+  id: z.string(),
 });
 
 export const UpdateMessageSchema = z.object({
@@ -37,3 +38,4 @@ export type CreateMessage = z.infer<typeof CreateMessageSchema>;
 export type UpdateMessage = z.infer<typeof UpdateMessageSchema>;
 export type DeleteMessage = z.infer<typeof DeleteMessageSchema>;
 export type CreateMessageChannel = z.infer<typeof CreateMessageChannelSchema>;
+export type GetChannelInfo = z.infer<typeof GetChannelInfoSchema>;

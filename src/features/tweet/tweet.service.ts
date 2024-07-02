@@ -45,10 +45,10 @@ export class TweetService {
     const tweetData = {
       id: uuidv4(),
       ...data,
+      media_url: data.media_url ? `{${data.media_url.join(",")}}` : null,
       user_id: uid,
-      created_at: new Date(),
-      updated_at: new Date(),
     };
+    console.log(tweetData);
     await db`insert into tweets ${db(tweetData)}`;
     return tweetData;
   }

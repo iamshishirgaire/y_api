@@ -55,8 +55,8 @@ GROUP BY
       id: uuidv4(),
       ...data,
       user_id: uId,
-      created_at: new Date(),
-      updated_at: new Date(),
+      created_at: date,
+      updated_at: date,
     };
 
     await db`insert into polls ${db(pollData)}`;
@@ -68,8 +68,8 @@ GROUP BY
       id: uuidv4(),
       ...data,
       user_id: uId,
-      created_at: new Date(),
-      updated_at: new Date(),
+      created_at: date,
+      updated_at: date,
     };
     const poll = await db<Polls[]>`
       SELECT * FROM polls
