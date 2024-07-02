@@ -15,11 +15,11 @@ export default interface Messages {
 
   media_url: string[] | null;
 
-  channel_id: MessageChannelsId | null;
+  channel_id: MessageChannelsId;
 
-  sender_id: UsersId | null;
+  sender_id: UsersId;
 
-  receiver_id: UsersId | null;
+  receiver_id: UsersId;
 
   created_at: Date;
 
@@ -34,11 +34,11 @@ export interface MessagesInitializer {
 
   media_url?: string[] | null;
 
-  channel_id?: MessageChannelsId | null;
+  channel_id: MessageChannelsId;
 
-  sender_id?: UsersId | null;
+  sender_id: UsersId;
 
-  receiver_id?: UsersId | null;
+  receiver_id: UsersId;
 
   /** Default value: CURRENT_TIMESTAMP */
   created_at?: Date;
@@ -55,11 +55,11 @@ export interface MessagesMutator {
 
   media_url?: string[] | null;
 
-  channel_id?: MessageChannelsId | null;
+  channel_id?: MessageChannelsId;
 
-  sender_id?: UsersId | null;
+  sender_id?: UsersId;
 
-  receiver_id?: UsersId | null;
+  receiver_id?: UsersId;
 
   created_at?: Date;
 

@@ -16,9 +16,9 @@ export default interface Notifications {
 
   post_type: ContentType;
 
-  content_id: string | null;
+  content_id: string;
 
-  message: string | null;
+  message: string;
 
   user_id: UsersId;
 
@@ -35,9 +35,9 @@ export interface NotificationsInitializer {
 
   post_type: ContentType;
 
-  content_id?: string | null;
+  content_id: string;
 
-  message?: string | null;
+  message: string;
 
   user_id: UsersId;
 
@@ -56,9 +56,9 @@ export interface NotificationsMutator {
 
   post_type?: ContentType;
 
-  content_id?: string | null;
+  content_id?: string;
 
-  message?: string | null;
+  message?: string;
 
   user_id?: UsersId;
 

@@ -23,9 +23,15 @@ export default interface Tweets {
 
   user_id: UsersId;
 
+  like_count: string;
+
   visibility: Visibility;
 
-  like_count: string;
+  retweet_count: string;
+
+  comment_count: string;
+
+  view_count: string;
 }
 
 /** Represents the initializer for the table public.tweets */
@@ -47,11 +53,20 @@ export interface TweetsInitializer {
 
   user_id: UsersId;
 
+  /** Default value: 0 */
+  like_count?: string;
+
   /** Default value: 'public'::visibility */
   visibility?: Visibility;
 
   /** Default value: 0 */
-  like_count?: string;
+  retweet_count?: string;
+
+  /** Default value: 0 */
+  comment_count?: string;
+
+  /** Default value: 0 */
+  view_count?: string;
 }
 
 /** Represents the mutator for the table public.tweets */
@@ -70,7 +85,13 @@ export interface TweetsMutator {
 
   user_id?: UsersId;
 
+  like_count?: string;
+
   visibility?: Visibility;
 
-  like_count?: string;
+  retweet_count?: string;
+
+  comment_count?: string;
+
+  view_count?: string;
 }

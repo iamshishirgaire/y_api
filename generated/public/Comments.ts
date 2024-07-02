@@ -16,17 +16,17 @@ export default interface Comments {
 
   media_url: string[] | null;
 
-  tweet_id: TweetsId | null;
+  tweet_id: TweetsId;
 
-  poll_id: PollsId | null;
+  poll_id: PollsId;
 
-  user_id: UsersId | null;
+  user_id: UsersId;
 
-  reply_to_id: CommentsId | null;
-
-  created_at: Date;
+  reply_to_id: CommentsId;
 
   updated_at: Date;
+
+  created_at: Date;
 }
 
 /** Represents the initializer for the table public.comments */
@@ -37,19 +37,19 @@ export interface CommentsInitializer {
 
   media_url?: string[] | null;
 
-  tweet_id?: TweetsId | null;
+  tweet_id: TweetsId;
 
-  poll_id?: PollsId | null;
+  poll_id: PollsId;
 
-  user_id?: UsersId | null;
+  user_id: UsersId;
 
-  reply_to_id?: CommentsId | null;
-
-  /** Default value: CURRENT_TIMESTAMP */
-  created_at?: Date;
+  reply_to_id: CommentsId;
 
   /** Default value: CURRENT_TIMESTAMP */
   updated_at?: Date;
+
+  /** Default value: CURRENT_TIMESTAMP */
+  created_at?: Date;
 }
 
 /** Represents the mutator for the table public.comments */
@@ -60,15 +60,15 @@ export interface CommentsMutator {
 
   media_url?: string[] | null;
 
-  tweet_id?: TweetsId | null;
+  tweet_id?: TweetsId;
 
-  poll_id?: PollsId | null;
+  poll_id?: PollsId;
 
-  user_id?: UsersId | null;
+  user_id?: UsersId;
 
-  reply_to_id?: CommentsId | null;
-
-  created_at?: Date;
+  reply_to_id?: CommentsId;
 
   updated_at?: Date;
+
+  created_at?: Date;
 }

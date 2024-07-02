@@ -48,7 +48,6 @@ export class TweetService {
       media_url: data.media_url ? `{${data.media_url.join(",")}}` : null,
       user_id: uid,
     };
-    console.log(tweetData);
     await db`insert into tweets ${db(tweetData)}`;
     return tweetData;
   }

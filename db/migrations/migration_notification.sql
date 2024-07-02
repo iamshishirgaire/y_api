@@ -1,7 +1,5 @@
-CREATE TYPE notification_type AS ENUM ('verified', 'mentions');
-
-CREATE TYPE content_type AS ENUM ('tweet', 'poll');
-
+CREATE TYPE  notification_type AS ENUM ('verified', 'mentions');
+CREATE TYPE   content_type AS ENUM ('tweet', 'poll');
 CREATE TABLE notifications (
     id UUID PRIMARY KEY,
     notif_type notification_type NOT NULL,

@@ -1,18 +1,5 @@
 CREATE
-OR REPLACE FUNCTION trigger_set_timestamps() 
-RETURNS TRIGGER AS $$ 
-BEGIN IF TG_OP = 'INSERT' 
-THEN NEW.created_at = now();
-NEW.updated_at = now();
-ELSIF TG_OP = 'UPDATE' 
-THEN NEW.updated_at = now();
-END IF;
-RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-DO $$ DECLARE rec RECORD;
-BEGIN FOR rec IN (
+OR REPLACE FUNCTION trigger_set_timestamps() RETURNS TRIGGER AS $ $ BEGIN IF TG_OP = 'INSERT' THEN NEW.created_at = now();NEW.updated_at = now();ELSIF TG_OP = 'UPDATE' THEN NEW.updated_at = now();END IF;RETURN NEW;END;$ $ LANGUAGE plpgsql;DO $ $ DECLARE rec RECORD;BEGIN FOR rec IN (
     SELECT
         tablename
     FROM
@@ -27,6 +14,4 @@ BEGIN FOR rec IN (
             EXECUTE PROCEDURE trigger_set_timestamps();',
     rec.tablename,
     rec.tablename
-);
-END LOOP;
-END $$;
+);END LOOP;END $ $;
