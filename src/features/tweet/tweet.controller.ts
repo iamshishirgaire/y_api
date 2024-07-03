@@ -24,9 +24,19 @@ tweetRoute
   })
   .post("/", zValidator("json", CreateTweetSchema, onErrorMsg), async (c) => {
     const createData = c.req.valid("json");
+    if (
+      !createData.content &&
+      !createData.media_url &&
+      !createData.parent_tweet_id
+    ) {
+      throw new HTTPException(400, {
+        message: "Invalid tweet data",
+      });
+    }
     const userId = c.get("userId");
     try {
       const tweet = await tweetService.create(createData, userId);
+
       return c.json(tweet);
     } catch (error) {
       throw new HTTPException(404, {

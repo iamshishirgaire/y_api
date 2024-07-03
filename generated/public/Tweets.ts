@@ -32,6 +32,8 @@ export default interface Tweets {
   comment_count: string;
 
   view_count: string;
+
+  parent_tweet_id: TweetsId | null;
 }
 
 /** Represents the initializer for the table public.tweets */
@@ -67,6 +69,8 @@ export interface TweetsInitializer {
 
   /** Default value: 0 */
   view_count?: string;
+
+  parent_tweet_id?: TweetsId | null;
 }
 
 /** Represents the mutator for the table public.tweets */
@@ -94,4 +98,6 @@ export interface TweetsMutator {
   comment_count?: string;
 
   view_count?: string;
+
+  parent_tweet_id?: TweetsId | null;
 }

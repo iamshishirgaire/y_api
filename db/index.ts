@@ -1,6 +1,6 @@
 import ora from "ora";
 import postgres from "postgres";
-import env from "../src/utils/envVariables";
+import env from "../src/utils/env";
 
 export async function testDbClient() {
   const spinner = ora({

@@ -1,12 +1,15 @@
-
 CREATE TABLE polls (
     id UUID PRIMARY KEY,
-    user_id UUID REFERENCES users(id)  ON DELETE CASCADE NOT NULL,
+    user_id UUID REFERENCES users(id) ON DELETE CASCADE NOT NULL,
     description TEXT,
-    options TEXT[] NOT NULL,
+    options TEXT [] NOT NULL,
     visibility visibility NOT NULL DEFAULT 'public',
+    comment_count BIGINT NOT NULL DEFAULT 0,
+    view_count BIGINT NOT NULL DEFAULT 0,
+    like_count BIGINT NOT NULL DEFAULT 0,
+    vote_count BIGINT NOT NULL DEFAULT 0,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP  WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+    updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE poll_results (
@@ -16,5 +19,5 @@ CREATE TABLE poll_results (
     vote_option INT NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE (user_id, poll_id)  -- Composite unique constraint
+    UNIQUE (user_id, poll_id) -- Composite unique constraint
 );

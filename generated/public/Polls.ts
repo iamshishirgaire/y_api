@@ -19,6 +19,14 @@ export default interface Polls {
 
   visibility: Visibility;
 
+  comment_count: string;
+
+  view_count: string;
+
+  like_count: string;
+
+  vote_count: string;
+
   created_at: Date;
 
   updated_at: Date;
@@ -36,6 +44,18 @@ export interface PollsInitializer {
 
   /** Default value: 'public'::visibility */
   visibility?: Visibility;
+
+  /** Default value: 0 */
+  comment_count?: string;
+
+  /** Default value: 0 */
+  view_count?: string;
+
+  /** Default value: 0 */
+  like_count?: string;
+
+  /** Default value: 0 */
+  vote_count?: string;
 
   /** Default value: CURRENT_TIMESTAMP */
   created_at?: Date;
@@ -55,6 +75,14 @@ export interface PollsMutator {
   options?: string[];
 
   visibility?: Visibility;
+
+  comment_count?: string;
+
+  view_count?: string;
+
+  like_count?: string;
+
+  vote_count?: string;
 
   created_at?: Date;
 

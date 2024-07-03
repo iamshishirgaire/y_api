@@ -13,10 +13,19 @@ export const CreateCommentSchema = z
     path: ["tweet_id", "poll_id"],
   });
 
-export const DeleteCommentSchema = z.object({
-  comment_id: z.string().uuid(),
-  user_id: z.string().uuid(),
-});
+export const DeleteCommentSchema = z
+  .object({
+    comment_id: z.string().uuid(),
+    user_id: z.string().uuid(),
+    tweet_id: z.string().uuid().optional(),
+    poll_id: z.string().uuid().optional(),
+  })
+  .transform((data) => {
+    if (!data.tweet_id && !data.poll_id) {
+      throw new Error("Either tweet_id or poll_id must be provided");
+    }
+    return data;
+  });
 
 export const GetCommentsSchema = z.object({
   id: z.string().uuid(),

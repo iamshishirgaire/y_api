@@ -1,5 +1,5 @@
 import type { Context, Next } from "hono";
-import { redisClient } from "../utils/redis";
+import { redisClient } from "../../services/redis";
 
 export const cache = (
   seconds: number

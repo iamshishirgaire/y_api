@@ -6,7 +6,6 @@ export const IsLikedByMeSchema = z.object({
 });
 
 export const CreateLikeSchema = z.object({
-  user_id: z.string(),
   tweet_id: z.string(),
 });
 

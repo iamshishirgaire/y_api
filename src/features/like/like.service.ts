@@ -21,12 +21,9 @@ export class LikeService {
     };
     try {
       await db.begin(async (sql) => {
-        // Insert into the likes table
         await sql`
         INSERT INTO likes ${sql(likeData)}
       `;
-
-        // Update the like count in the tweets table
         await sql`
         UPDATE tweets
         SET like_count = like_count + 1
@@ -49,21 +46,18 @@ export class LikeService {
   public async dislikeTweet(user_id: string, tweet_id: string) {
     try {
       await db.begin(async (sql) => {
-        // Delete the like from the likes table
         const result = await sql`
         DELETE FROM likes 
         WHERE user_id = ${user_id} AND tweet_id = ${tweet_id}
         RETURNING *
       `;
 
-        // Check if a like was actually deleted
         if (result.count === 0) {
           throw new HTTPException(404, {
             message: "Like not found",
           });
         }
 
-        // Update the like count in the tweets table
         await sql`
         UPDATE tweets
         SET like_count = like_count - 1

@@ -10,6 +10,8 @@ import { likeRoute } from "./features/like/like.controller";
 import { commentRoute } from "./features/comment/comment.controller";
 import { followRoute } from "./features/follow/follow.controller";
 import { mentionRoute } from "./features/mention/mention.controller";
+import { bookmarkRoute } from "./features/bookmark/bookmark.controller";
+import { uploadRoute } from "./features/upload/upload.controller";
 //handlers
 export const routes = (app: Hono) => {
   app.route("/auth", authRoute);
@@ -23,4 +25,6 @@ export const routes = (app: Hono) => {
   app.route("/comment", commentRoute);
   app.route("/follow", followRoute);
   app.route("/mention", mentionRoute);
+  app.route("/bookmark", bookmarkRoute);
+  app.route("/upload", uploadRoute);
 };

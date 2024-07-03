@@ -74,6 +74,13 @@ export class CommentService {
         await sql`
           INSERT INTO comments ${sql(commentData)}
         `;
+        if (data.tweet_id && !data.poll_id) {
+          await sql`
+          UPDATE tweets
+          SET comment_count = comment_count + 1
+          WHERE id = ${data.tweet_id}
+        `;
+        }
       });
       return commentData;
     } catch (error: unknown) {
@@ -96,6 +103,20 @@ export class CommentService {
           throw new HTTPException(404, {
             message: "Comment not found",
           });
+        }
+        if (data.tweet_id) {
+          await sql`
+            UPDATE tweets
+            SET comment_count = comment_count - 1
+            WHERE id = ${data.tweet_id}
+          `;
+        }
+        if (data.poll_id) {
+          await sql`
+            UPDATE polls
+            SET comment_count = comment_count - 1
+            WHERE id = ${data.poll_id}
+          `;
         }
       });
       return { message: "Comment deleted successfully" };

@@ -8,7 +8,8 @@ import {
 } from "./like.schema";
 import { LikeService } from "./like.service";
 import { cache } from "../../middleware/cache.middleware";
-export const likeRoute = new Hono();
+import type { Variables } from "../../utils/authVariables";
+export const likeRoute = new Hono<{ Variables: Variables }>();
 
 const likeService = new LikeService();
 
@@ -26,9 +27,8 @@ likeRoute
   )
   .post("/", zValidator("query", CreateLikeSchema, onErrorMsg), async (c) => {
     const reqData = c.req.valid("query");
-    return c.json(
-      await likeService.likeTweet(reqData.user_id, reqData.tweet_id)
-    );
+    const userId = c.get("userId");
+    return c.json(await likeService.likeTweet(userId, reqData.tweet_id));
   })
   .delete("/", zValidator("query", DeleteLikeSchema, onErrorMsg), async (c) => {
     const reqData = c.req.valid("query");

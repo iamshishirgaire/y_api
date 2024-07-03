@@ -7,9 +7,10 @@ export const getTweetSchema = z.object({
 const VisibilityEnum = z.enum(["public", "private"]);
 
 export const CreateTweetSchema = z.object({
-  content: z.string().min(1),
+  content: z.string().optional(),
   media_url: z.array(z.string().url()).optional(),
   visibility: VisibilityEnum.default("public"),
+  parent_tweet_id: z.string().uuid().optional(),
 });
 
 export const UpdateTweetSchema = z.object({

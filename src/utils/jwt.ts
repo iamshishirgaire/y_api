@@ -1,5 +1,5 @@
 import jwt, { type JwtPayload } from "jsonwebtoken";
-import env from "./envVariables";
+import env from "./env";
 
 const secretKey = env.JWT_SECRET;
 
@@ -13,7 +13,6 @@ export const generateAccessToken = (payload: CustomJwtPayload) => {
     expiresIn: env.JWT_EXPIRES_IN,
   });
   return token;
-
 };
 
 export const generateRefreshToken = (payload: CustomJwtPayload) => {

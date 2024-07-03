@@ -48,7 +48,14 @@ export class TweetService {
       media_url: data.media_url ? `{${data.media_url.join(",")}}` : null,
       user_id: uid,
     };
-    await db`insert into tweets ${db(tweetData)}`;
+    await db.begin(async (sql) => {
+      await sql`
+       INSERT INTO tweets ${sql(tweetData)}
+     `;
+      if (data.parent_tweet_id) {
+        await sql`update tweets set retweet_count = retweet_count + 1 where id = ${data.parent_tweet_id}`;
+      }
+    });
     return tweetData;
   }
 
@@ -67,9 +74,23 @@ export class TweetService {
   }
 
   public async delete(id: string): Promise<void> {
-    await db`
+    await db.begin(async (sql) => {
+      const originalTweet = await sql<Tweets[]>`
+      SELECT * FROM tweets
+      WHERE id = ${id}
+    `;
+      if (originalTweet.length === 0) {
+        throw new HTTPException(404, {
+          message: "Tweet not found",
+        });
+      }
+      await sql`
       DELETE FROM tweets
       WHERE id = ${id}
     `;
+      if (originalTweet[0].parent_tweet_id) {
+        await sql`update tweets set retweet_count = retweet_count - 1 where id = ${originalTweet[0].parent_tweet_id}`;
+      }
+    });
   }
 }
