@@ -25,4 +25,5 @@ TASKS :
 - [ ] Realtime Notifications (w websockets)
 - [ ] Scaling WS (w @upstash/redis)
 - [ ] Ratelimiting (w @upstash/redis)
+- [ ] Setup Logger
 - [x] Caching (w @upstash/redis)

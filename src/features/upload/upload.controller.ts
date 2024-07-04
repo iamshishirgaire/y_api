@@ -1,10 +1,8 @@
 import { Hono } from "hono";
-import { zValidator } from "@hono/zod-validator";
-import { onErrorMsg } from "../../utils/zodValidationMessage";
+import { UploadService } from "./upload.service";
 export const uploadRoute = new Hono();
+const uploadService = new UploadService();
 
-uploadRoute.get("/", (c) => {
-  return c.json({
-    message: "upload GET ROUTE",
-  });
+uploadRoute.get("/", async (c) => {
+  return c.json(await uploadService.generateSignedUrl());
 });

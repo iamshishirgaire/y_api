@@ -1,4 +1,3 @@
-drop table if exists comments;
 
 CREATE TABLE comments (
     id UUID PRIMARY KEY,

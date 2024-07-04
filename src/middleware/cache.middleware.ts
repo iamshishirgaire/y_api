@@ -14,7 +14,7 @@ export const cache = (
           body: string;
           headers: Record<string, string>;
           status: number;
-        } = cache as {
+        } = JSON.parse(cache) as {
           body: string;
           headers: Record<string, string>;
           status: number;
@@ -59,7 +59,12 @@ export const cache = (
       });
 
       // Store the response in Redis
-      await redisClient.set(c.req.url, cacheResponse, { ex: seconds });
+      await redisClient.set(
+        c.req.url,
+        JSON.stringify(cacheResponse),
+        "EX",
+        seconds
+      );
 
       c.res.headers.set("X-Redis-Cache", "MISS");
     }

@@ -17,6 +17,7 @@ export class NotificationService {
         const notifications = await db`
           SELECT * FROM notifications WHERE user_id = ${user_id}
           order by created_at desc
+          limit ${data.limit} offset ${data.page}
         `;
         return notifications;
       }
@@ -24,6 +25,7 @@ export class NotificationService {
         SELECT * FROM notifications WHERE user_id = ${user_id}
         and notif_type = ${data.type}
         order by created_at desc
+        limit ${data.limit} offset ${data.page}
       `;
       return notifications;
     } catch (error) {

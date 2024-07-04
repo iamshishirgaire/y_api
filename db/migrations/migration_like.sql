@@ -1,4 +1,3 @@
-drop table if exists likes;
 
 CREATE TABLE likes (
     id UUID PRIMARY KEY,
