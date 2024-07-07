@@ -12,6 +12,12 @@ export class UserService {
     >`select  * from users where users.email = ${email} limit 1`;
     return usr[0];
   }
+  public async findByUserName(user_name: string) {
+    const usr = await db<
+      Users[]
+    >`select  * from users where users.user_name = ${user_name} limit 1`;
+    return usr[0];
+  }
   public async findById(userId: string) {
     const usr = await db<
       Users[]
@@ -28,8 +34,6 @@ export class UserService {
       last_name: response.family_name,
       profile_picture: response.picture,
       email: response.email,
-      created_at: date,
-      updated_at: date,
       following: 0,
       followers: 0,
     };

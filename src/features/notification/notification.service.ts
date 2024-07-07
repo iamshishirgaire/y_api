@@ -53,7 +53,7 @@ export class NotificationService {
     }
   }
 
-  public async create(data: CreateNotification) {
+  public async create(data: CreateNotification[]) {
     const notificationData = {
       id: uuidv4(),
       ...data,

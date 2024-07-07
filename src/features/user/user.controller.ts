@@ -22,6 +22,9 @@ userRoute
     if (query.id) {
       return c.json((await userService.findById(query.id)) ?? {});
     }
+    if (query.user_name) {
+      return c.json((await userService.findByUserName(query.user_name)) ?? {});
+    }
     throw new HTTPException(400, {
       message: "Query must contain either 'email' or 'id'",
     });

@@ -34,8 +34,9 @@ tweetRoute
       });
     }
     const userId = c.get("userId");
+    const userName = c.get("userName");
     try {
-      const tweet = await tweetService.create(createData, userId);
+      const tweet = await tweetService.create(createData, userId, userName);
 
       return c.json(tweet);
     } catch (error) {

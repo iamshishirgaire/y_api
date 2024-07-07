@@ -4,10 +4,24 @@ export const userQuerySchema = z
   .object({
     email: z.string().email().optional(),
     id: z.string().uuid().optional(),
+    user_name: z.string().optional(),
   })
-  .refine((data) => data.email || data.id, {
-    message: "Query must contain either 'email' or 'id'",
-    path: ["query"],
+  .transform((d) => {
+    if (!d.email && !d.id && !d.user_name) {
+      throw new Error(
+        "Query must contain either 'email' or 'id' or 'user_name'",
+      );
+    }
+    if (
+      (d.email && d.id) ||
+      (d.email && d.user_name) ||
+      (d.id && d.user_name)
+    ) {
+      throw new Error(
+        "Query must contain either 'email' or 'id' or 'user_name'",
+      );
+    }
+    return d;
   });
 
 export const updateUserSchema = z.object({

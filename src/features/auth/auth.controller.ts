@@ -30,6 +30,7 @@ authRoute
         let usr: {
           id: string;
           email: string;
+          user_name: string;
         };
         if (user?.email) {
           usr = user;
@@ -39,12 +40,12 @@ authRoute
 
         const accessToken = generateAccessToken({
           userId: usr.id,
-          username: usr.email,
+          userName: usr.user_name,
         });
 
         const refreshToken = generateRefreshToken({
           userId: usr.id,
-          username: usr.email,
+          userName: usr.email,
         });
 
         setCookie(c, "refreshToken", refreshToken, {
@@ -77,11 +78,11 @@ authRoute
       const decoded = validateToken(refreshToken);
       const accessToken = generateAccessToken({
         userId: decoded.userId,
-        username: decoded.username,
+        userName: decoded.userName,
       });
       const newRefreshToken = generateRefreshToken({
         userId: decoded.userId,
-        username: decoded.username,
+        userName: decoded.userName,
       });
 
       setCookie(c, "refreshToken", newRefreshToken, {

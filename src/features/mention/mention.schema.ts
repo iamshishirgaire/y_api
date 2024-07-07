@@ -1,6 +1,8 @@
-import { z } from 'zod';
+import { z } from "zod";
 
-export const mentionSchema = z.object({
-  id: z.string(),
- 
+export const getMentionsSchema = z.object({
+  page: z.string().transform((val) => Number.parseInt(val, 10)),
+  page_size: z.string().transform((val) => Number.parseInt(val, 10)),
+  query: z.string(),
 });
+export type GetMentions = z.infer<typeof getMentionsSchema>;

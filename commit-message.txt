@@ -1,0 +1,35 @@
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   db/migrations/migration_init.sql
+	modified:   db/migrations/migration_notification.sql
+	deleted:    services/redis.ts
+	deleted:    services/winston.ts
+	modified:   src/app.ts
+	modified:   src/features/auth/auth.controller.ts
+	modified:   src/features/mention/mention.controller.ts
+	modified:   src/features/mention/mention.schema.ts
+	modified:   src/features/mention/mention.service.ts
+	modified:   src/features/notification/notification-messages.ts
+	modified:   src/features/notification/notification.schema.ts
+	modified:   src/features/notification/notification.service.ts
+	modified:   src/features/tweet/tweet.controller.ts
+	modified:   src/features/tweet/tweet.service.ts
+	modified:   src/features/user/user.service.ts
+	modified:   src/middleware/auth.middleware.ts
+	modified:   src/middleware/cache.middleware.ts
+	modified:   src/utils/authVariables.ts
+	modified:   src/utils/jwt.ts
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	commit-message.txt
+	db/migrations/migration_hashtag.sql
+	src/features/hashtag/
+	src/services/
+	src/utils/getHashTagsandMentions.ts
+
+no changes added to commit (use "git add" and/or "git commit -a")

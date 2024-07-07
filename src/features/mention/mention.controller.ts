@@ -1,25 +1,19 @@
-
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
-import { mentionSchema } from "./mention.schema";
 import { onErrorMsg } from "../../utils/zodValidationMessage";
-export const mentionRoute = new Hono();
-
-mentionRoute
-  .get("/",zValidator("param",mentionSchema,onErrorMsg) ,(c) => {
-    return c.json({
-      message: "mention GET ROUTE",
-      
-    });
-  })
-  .post("/", (c) => {
-    return c.json({
-      message: "mention POST ROUTE",
-    });
-  })
-  .patch("/", (c) => {
-    return c.json({
-      message: "mention PATCH ROUTE",
-    });
-  });
-
+import { getMentionsSchema } from "./mention.schema";
+import { MentionService } from "./mention.service";
+import type { Variables } from "../../utils/authVariables";
+import { cache } from "../../middleware/cache.middleware";
+export const mentionRoute = new Hono<{ Variables: Variables }>();
+const mentionService = new MentionService();
+mentionRoute.get(
+  "/",
+  cache(30),
+  zValidator("query", getMentionsSchema, onErrorMsg),
+  async (c) => {
+    const reqData = c.req.valid("query");
+    const user_id = c.get("userId");
+    return c.json(await mentionService.findAll(reqData, user_id));
+  }
+);

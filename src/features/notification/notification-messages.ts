@@ -1,4 +1,4 @@
-class NotificationManager {
+export class NotificationMessagesCreator {
   followNotification(followerUsername: string): string {
     return `${followerUsername} started following you.`;
   }
