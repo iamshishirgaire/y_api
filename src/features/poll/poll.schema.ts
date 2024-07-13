@@ -11,8 +11,15 @@ export const GetPollByUsersSchema = z.object({
 
 export const CreatePollSchema = z.object({
   description: z.string().min(1),
-  options: z.array(z.string()).min(2).max(5),
+  options: z.array(z.string()).min(2).max(4),
   visibility: VisibilityEnum.default("public"),
+  duration: z.string().refine((date) => {
+    const parsedDate = new Date(date);
+    return (
+      parsedDate.getTime() > Date.now() &&
+      parsedDate.getTime() < Date.now() + 7 * 24 * 60 * 60 * 1000
+    );
+  }),
 });
 
 export const CreatePollResultSchema = z.object({

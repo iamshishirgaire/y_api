@@ -3,6 +3,8 @@
 
 import { type UsersId } from './Users';
 import { type TweetsId } from './Tweets';
+import { type PollsId } from './Polls';
+import { type CommentsId } from './Comments';
 
 /** Identifier type for public.likes */
 export type LikesId = string & { __brand: 'LikesId' };
@@ -13,7 +15,11 @@ export default interface Likes {
 
   user_id: UsersId;
 
-  tweet_id: TweetsId;
+  tweet_id: TweetsId | null;
+
+  poll_id: PollsId | null;
+
+  comment_id: CommentsId | null;
 
   created_at: Date;
 }
@@ -24,7 +30,11 @@ export interface LikesInitializer {
 
   user_id: UsersId;
 
-  tweet_id: TweetsId;
+  tweet_id?: TweetsId | null;
+
+  poll_id?: PollsId | null;
+
+  comment_id?: CommentsId | null;
 
   /** Default value: CURRENT_TIMESTAMP */
   created_at?: Date;
@@ -36,7 +46,11 @@ export interface LikesMutator {
 
   user_id?: UsersId;
 
-  tweet_id?: TweetsId;
+  tweet_id?: TweetsId | null;
+
+  poll_id?: PollsId | null;
+
+  comment_id?: CommentsId | null;
 
   created_at?: Date;
 }

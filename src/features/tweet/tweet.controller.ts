@@ -24,15 +24,6 @@ tweetRoute
   })
   .post("/", zValidator("json", CreateTweetSchema, onErrorMsg), async (c) => {
     const createData = c.req.valid("json");
-    if (
-      !createData.content &&
-      !createData.media_url &&
-      !createData.parent_tweet_id
-    ) {
-      throw new HTTPException(400, {
-        message: "Invalid tweet data",
-      });
-    }
     const userId = c.get("userId");
     const userName = c.get("userName");
     try {
@@ -40,7 +31,8 @@ tweetRoute
 
       return c.json(tweet);
     } catch (error) {
-      throw new HTTPException(404, {
+      console.log(error);
+      throw new HTTPException(400, {
         message:
           error && error instanceof Error
             ? error.message
@@ -82,5 +74,5 @@ tweetRoute
           message: "Failed to delete tweet",
         });
       }
-    }
+    },
   );

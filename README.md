@@ -16,14 +16,14 @@ TASKS :
 - [x] Likes and comments Module
 - [x] Direct Message Module
 - [x] Follow Module
-- [ ] Mention Module
-- [ ] Search Module
+- [x] Mention Module
+- [x] Search Module
 - [ ] Trending Module
-- [ ] Hashtags & Mention Module
+- [x] Hashtags & Mention Module
 - [ ] Feeds Module
-- [ ] Realtime Messaging(w websockets)
-- [ ] Realtime Notifications (w websockets)
-- [ ] Scaling WS (w @upstash/redis)
-- [ ] Ratelimiting (w @upstash/redis)
-- [ ] Setup Logger
 - [x] Caching (w @upstash/redis)
+- [ ] Setup Logger
+- [ ] Ratelimiting (w @upstash/redis)
+- [ ] Email Module
+- [ ] Setup BullMQ for background jobs
+- [ ] Setup CRON jobs

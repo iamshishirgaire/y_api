@@ -1,14 +1,12 @@
 import { HTTPException } from "hono/http-exception";
+import { v4 as uuidv4 } from "uuid";
 import db from "../../../db";
 import type Tweets from "../../../generated/public/Tweets";
-import type { CreateTweet, UpdateTweet } from "./tweet.schema";
-import { v4 as uuidv4 } from "uuid";
 import { getHashTagsandMentions } from "../../utils/getHashTagsandMentions";
-import { HashtagService } from "../hashtag/hashtag.service";
-import { NotificationService } from "../notification/notification.service";
+import type { CreateHashTags } from "../hashtag/hashtag.schema";
 import { NotificationMessagesCreator } from "../notification/notification-messages";
 import type { CreateNotification } from "../notification/notification.schema";
-import type { CreateHashTags } from "../hashtag/hashtag.schema";
+import type { CreateTweet, UpdateTweet } from "./tweet.schema";
 
 export class TweetService {
   public async findAll(limit: number, offset: number): Promise<Tweets[]> {
@@ -56,6 +54,7 @@ export class TweetService {
         });
       }
       const { hashTags, mentions } = getHashTagsandMentions(tweetContent ?? "");
+      console.log(hashTags, mentions);
       const tweetData = {
         id: uuidv4(),
         ...data,
@@ -112,7 +111,7 @@ export class TweetService {
             });
           }
           await sql`INSERT INTO notifications ${db(notificationData)}
-          
+
           `;
         }
       });

@@ -30,6 +30,10 @@ export default interface Polls {
   created_at: Date;
 
   updated_at: Date;
+
+  expired_at: Date;
+
+  retweet_count: string;
 }
 
 /** Represents the initializer for the table public.polls */
@@ -62,6 +66,11 @@ export interface PollsInitializer {
 
   /** Default value: CURRENT_TIMESTAMP */
   updated_at?: Date;
+
+  expired_at: Date;
+
+  /** Default value: 0 */
+  retweet_count?: string;
 }
 
 /** Represents the mutator for the table public.polls */
@@ -87,4 +96,8 @@ export interface PollsMutator {
   created_at?: Date;
 
   updated_at?: Date;
+
+  expired_at?: Date;
+
+  retweet_count?: string;
 }

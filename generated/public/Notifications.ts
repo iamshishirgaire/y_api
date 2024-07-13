@@ -3,6 +3,8 @@
 
 import { type default as NotificationType } from './NotificationType';
 import { type default as ContentType } from './ContentType';
+import { type PollsId } from './Polls';
+import { type TweetsId } from './Tweets';
 import { type UsersId } from './Users';
 
 /** Identifier type for public.notifications */
@@ -16,7 +18,9 @@ export default interface Notifications {
 
   post_type: ContentType;
 
-  content_id: string;
+  poll_id: PollsId | null;
+
+  tweet_id: TweetsId | null;
 
   message: string;
 
@@ -35,7 +39,9 @@ export interface NotificationsInitializer {
 
   post_type: ContentType;
 
-  content_id: string;
+  poll_id?: PollsId | null;
+
+  tweet_id?: TweetsId | null;
 
   message: string;
 
@@ -56,7 +62,9 @@ export interface NotificationsMutator {
 
   post_type?: ContentType;
 
-  content_id?: string;
+  poll_id?: PollsId | null;
+
+  tweet_id?: TweetsId | null;
 
   message?: string;
 
