@@ -45,12 +45,16 @@ export class UserService {
   }
 
   public async update(parsedData: UpdateUserInput): Promise<void> {
-    const { id, ...rest } = parsedData;
-    const updateData = {
-      ...rest,
-      updated_at: new Date(),
-    };
-    await db`update users set ${db(updateData)} where users.id = ${id}`;
+    try {
+      const { id, ...rest } = parsedData;
+      const updateData = {
+        ...rest,
+        updated_at: new Date(),
+      };
+      await db`update users set ${db(updateData)} where users.id = ${id}`;
+    } catch (error) {
+      throw new Error("Failed to update user");
+    }
   }
 
   public async delete(id: string): Promise<void> {

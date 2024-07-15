@@ -33,15 +33,10 @@ userRoute
     const body = c.req.valid("json");
     const id = c.get("userId");
     verifyAuth(body.id, id);
-    try {
-      await userService.update(body);
-      c.status(201);
-      return c.json({
-        message: "User updated successfully",
-      });
-    } catch (e) {
-      throw new HTTPException(400, {
-        message: "Failed to update user",
-      });
-    }
+
+    await userService.update(body);
+    c.status(201);
+    return c.json({
+      message: "User updated successfully",
+    });
   });

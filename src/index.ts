@@ -6,13 +6,21 @@ import { logger } from "hono/logger";
 import { testDbClient } from "../db";
 import { routes } from "./app";
 import { validateAuth } from "./middleware/auth.middleware";
+import { collectDefaultMetrics, Counter, Gauge, Registry } from "prom-client";
+import {
+  metricsEndpoint,
+  metricsMiddleware,
+} from "./middleware/metrics.middleware";
+import { loggingMiddleware } from "./middleware/logger.middleware";
+
+const register = new Registry();
+collectDefaultMetrics({ register });
 
 await testDbClient();
 const app = new Hono().basePath("/api/v1");
 app.use(csrf());
 app.use(logger());
 app.use(cors());
-
 app.onError((err, c) => {
   let message: { message: string };
   try {
@@ -37,6 +45,9 @@ app.get("/status", (c) => {
     message: "Server up and running",
   });
 });
+app.use(loggingMiddleware);
+app.use(metricsMiddleware);
+app.get("/metrics", metricsEndpoint);
 app.use(validateAuth);
 routes(app);
 export default app;

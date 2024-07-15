@@ -21,9 +21,11 @@ TASKS :
 - [ ] Trending Module
 - [x] Hashtags & Mention Module
 - [ ] Feeds Module
-- [x] Caching (w @upstash/redis)
-- [ ] Setup Logger
-- [ ] Ratelimiting (w @upstash/redis)
+- [x] Caching (w @aiven/redis)
+- [x] Setup Logger (w winston)
+- [x] Setup Health Monitoring
+- [x] Setup Metrics & Logs Monitoring (w prometheus, grafana, loki )
+- [ ] Ratelimiting (w @aiven/redis)
 - [ ] Email Module
 - [ ] Setup BullMQ for background jobs
 - [ ] Setup CRON jobs
