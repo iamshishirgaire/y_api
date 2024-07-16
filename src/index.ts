@@ -3,15 +3,16 @@ import { cors } from "hono/cors";
 import { csrf } from "hono/csrf";
 import { HTTPException } from "hono/http-exception";
 import { logger } from "hono/logger";
+import { Counter, Gauge, Registry, collectDefaultMetrics } from "prom-client";
 import { testDbClient } from "../db";
 import { routes } from "./app";
 import { validateAuth } from "./middleware/auth.middleware";
-import { collectDefaultMetrics, Counter, Gauge, Registry } from "prom-client";
+import { loggingMiddleware } from "./middleware/logger.middleware";
 import {
   metricsEndpoint,
   metricsMiddleware,
 } from "./middleware/metrics.middleware";
-import { loggingMiddleware } from "./middleware/logger.middleware";
+import { rateLimiterMiddleware } from "./middleware/ratelimit.middleware";
 
 const register = new Registry();
 collectDefaultMetrics({ register });
@@ -47,7 +48,9 @@ app.get("/status", (c) => {
 });
 app.use(loggingMiddleware);
 app.use(metricsMiddleware);
+
 app.get("/metrics", metricsEndpoint);
+app.use(rateLimiterMiddleware);
 app.use(validateAuth);
 routes(app);
 export default app;

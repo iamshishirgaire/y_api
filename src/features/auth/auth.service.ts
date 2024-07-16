@@ -1,5 +1,6 @@
 import axios from "axios";
 import type { GoogleTokenResponse } from "./auth.types";
+import { sendEmail } from "@email/index";
 
 export class AuthService {
   public async login(): Promise<void> {
@@ -19,6 +20,12 @@ export class AuthService {
     const { data } = await axios.get<GoogleTokenResponse>(oauthGoogleUrl, {
       responseType: "json",
     });
+    await sendEmail(
+      data.email,
+      "Welcome to Twitter!",
+      "Welcome to Twitter!",
+      data.name ?? ""
+    );
     return data;
   }
 }

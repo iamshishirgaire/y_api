@@ -6,8 +6,11 @@
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
     "esModuleInterop": true,
-    "moduleResolution": "Node"
-
+    "moduleResolution": "Node",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@email/*": ["./email/*"],
+    }
 
   }
 }
