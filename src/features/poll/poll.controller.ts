@@ -19,6 +19,9 @@ const pollService = new PollService();
 pollRoute
   .get("/feed", async (c) => {
     const userId = c.get("userId");
+    if (!userId) {
+      return c.json([]);
+    }
     return c.json(await pollService.GetPollInFeed(userId));
   })
   .get(
@@ -30,7 +33,7 @@ pollRoute
       const userId = c.get("userId");
       const res = await pollService.findOne(id, userId);
       return c.json(res);
-    }
+    },
   )
   .get(
     "/user/:userId",
@@ -40,7 +43,7 @@ pollRoute
       const { userId } = c.req.valid("param");
       const res = await pollService.getPollsByUser(userId);
       return c.json(res);
-    }
+    },
   )
   .post("/", zValidator("json", CreatePollSchema, onErrorMsg), async (c) => {
     const data = c.req.valid("json");
@@ -56,7 +59,7 @@ pollRoute
       const userId = c.get("userId");
       const res = await pollService.vote(data, userId);
       return c.json(res);
-    }
+    },
   )
   .delete("/:id", zValidator("param", GetPollSchema, onErrorMsg), async (c) => {
     const { id } = c.req.valid("param");

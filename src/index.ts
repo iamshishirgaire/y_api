@@ -12,7 +12,6 @@ import {
   metricsEndpoint,
   metricsMiddleware,
 } from "./middlewares/metrics.middleware";
-import { rateLimiterMiddleware } from "./middlewares/ratelimit.middleware";
 const register = new Registry();
 collectDefaultMetrics({ register });
 await testDbClient();

@@ -3,4 +3,7 @@ export const publicRoutes = [
   "auth/refresh-token",
   "auth/logout",
   "/status",
+  "tweet/all",
+  "poll/feed",
+  "user",
 ];
