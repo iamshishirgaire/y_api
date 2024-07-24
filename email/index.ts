@@ -6,14 +6,12 @@ const resend = new Resend("re_123456789");
 export const sendEmail = async (
   email: string,
   subject: string,
-  text: string,
   username: string
 ) => {
   await resend.emails.send({
     from: "Acme <onboarding@resend.dev>",
     to: email,
     subject: subject,
-    text: text,
     react: React.createElement(TwitterWelcomeEmail, {
       username: username,
     }),

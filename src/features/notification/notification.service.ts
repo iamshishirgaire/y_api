@@ -10,22 +10,21 @@ import type {
 } from "./notification.schema";
 
 export class NotificationService {
-  public async findAll(data: GetNotification) {
-    const { user_id } = data;
+  public async findAll(data: GetNotification, userId: string) {
     try {
       if (data.type === "all") {
         const notifications = await db`
-          SELECT * FROM notifications WHERE user_id = ${user_id}
+          SELECT * FROM notifications WHERE user_id = ${userId}
           order by created_at desc
-          limit ${data.limit} offset ${data.page}
+          limit ${data.page_size} offset ${data.page}
         `;
         return notifications;
       }
       const notifications = await db`
-        SELECT * FROM notifications WHERE user_id = ${user_id}
+        SELECT * FROM notifications WHERE user_id = ${userId}
         and notif_type = ${data.type}
         order by created_at desc
-        limit ${data.limit} offset ${data.page}
+        limit ${data.page_size} offset ${data.page}
       `;
       return notifications;
     } catch (error) {

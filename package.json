@@ -5,7 +5,8 @@
     "db:seed": "bun run db/seed.ts",
     "gen:module": "bun run src/utils/genModule.ts",
     "db:generate": "bunx kanel",
-    "email": "bun email:dev"
+    "email": "bun email:dev",
+    "start": "bun run src/index.ts"
   },
   "dependencies": {
     "@faker-js/faker": "^8.4.1",
@@ -14,6 +15,7 @@
     "@types/cli-table": "^0.3.4",
     "@types/socket.io": "^3.0.2",
     "axios": "^1.7.2",
+    "bullmq": "^5.10.0",
     "chalk": "^5.3.0",
     "cli-table": "^0.3.11",
     "cloudinary": "^2.2.0",

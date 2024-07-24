@@ -20,12 +20,6 @@ export class AuthService {
     const { data } = await axios.get<GoogleTokenResponse>(oauthGoogleUrl, {
       responseType: "json",
     });
-    await sendEmail(
-      data.email,
-      "Welcome to Twitter!",
-      "Welcome to Twitter!",
-      data.name ?? ""
-    );
     return data;
   }
 }

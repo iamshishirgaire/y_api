@@ -3,7 +3,6 @@ import { opts, rateLimiter } from "../utils/rate-limiter";
 
 export const rateLimiterMiddleware = createMiddleware(async (c, next) => {
   try {
-    console.log("Rate limiter middleware", c.req.raw.headers ?? "hello");
     const rateLimiterRes = await rateLimiter.consume(
       c.req.raw.headers.get("CF-Connecting-IP") ?? "",
     );

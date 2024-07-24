@@ -54,7 +54,6 @@ export class TweetService {
         });
       }
       const { hashTags, mentions } = getHashTagsandMentions(tweetContent ?? "");
-      console.log(hashTags, mentions);
       const tweetData = {
         id: uuidv4(),
         ...data,
@@ -117,7 +116,6 @@ export class TweetService {
       });
       return tweetData;
     } catch (error) {
-      console.log(error);
       throw new HTTPException(400, {
         message: "Failed to create tweet",
       });

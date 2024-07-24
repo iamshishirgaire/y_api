@@ -7,7 +7,7 @@ import {
   IsLikedByMeSchema,
 } from "./like.schema";
 import { LikeService } from "./like.service";
-import { cache } from "../../middleware/cache.middleware";
+import { cache } from "../../middlewares/cache.middleware";
 import type { Variables } from "../../utils/authVariables";
 export const likeRoute = new Hono<{ Variables: Variables }>();
 

@@ -3,21 +3,20 @@ import { cors } from "hono/cors";
 import { csrf } from "hono/csrf";
 import { HTTPException } from "hono/http-exception";
 import { logger } from "hono/logger";
-import { Counter, Gauge, Registry, collectDefaultMetrics } from "prom-client";
+import { Registry, collectDefaultMetrics } from "prom-client";
 import { testDbClient } from "../db";
 import { routes } from "./app";
-import { validateAuth } from "./middleware/auth.middleware";
-import { loggingMiddleware } from "./middleware/logger.middleware";
+import { validateAuth } from "./middlewares/auth.middleware";
+import { loggingMiddleware } from "./middlewares/logger.middleware";
 import {
   metricsEndpoint,
   metricsMiddleware,
-} from "./middleware/metrics.middleware";
-import { rateLimiterMiddleware } from "./middleware/ratelimit.middleware";
-
+} from "./middlewares/metrics.middleware";
+import { rateLimiterMiddleware } from "./middlewares/ratelimit.middleware";
 const register = new Registry();
 collectDefaultMetrics({ register });
-
 await testDbClient();
+
 const app = new Hono().basePath("/api/v1");
 app.use(csrf());
 app.use(logger());
@@ -50,7 +49,7 @@ app.use(loggingMiddleware);
 app.use(metricsMiddleware);
 
 app.get("/metrics", metricsEndpoint);
-app.use(rateLimiterMiddleware);
+// app.use(rateLimiterMiddleware);
 app.use(validateAuth);
 routes(app);
 export default app;

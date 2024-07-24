@@ -11,13 +11,13 @@ import {
   GetPollSchema,
 } from "./poll.schema";
 import PollService from "./poll.service";
-import { cache } from "../../middleware/cache.middleware";
+import { cache } from "../../middlewares/cache.middleware";
 
 export const pollRoute = new Hono<{ Variables: Variables }>();
 const pollService = new PollService();
 
 pollRoute
-  .get("/feed", cache(60), async (c) => {
+  .get("/feed", async (c) => {
     const userId = c.get("userId");
     return c.json(await pollService.GetPollInFeed(userId));
   })
@@ -30,7 +30,7 @@ pollRoute
       const userId = c.get("userId");
       const res = await pollService.findOne(id, userId);
       return c.json(res);
-    },
+    }
   )
   .get(
     "/user/:userId",
@@ -40,7 +40,7 @@ pollRoute
       const { userId } = c.req.valid("param");
       const res = await pollService.getPollsByUser(userId);
       return c.json(res);
-    },
+    }
   )
   .post("/", zValidator("json", CreatePollSchema, onErrorMsg), async (c) => {
     const data = c.req.valid("json");
@@ -56,7 +56,7 @@ pollRoute
       const userId = c.get("userId");
       const res = await pollService.vote(data, userId);
       return c.json(res);
-    },
+    }
   )
   .delete("/:id", zValidator("param", GetPollSchema, onErrorMsg), async (c) => {
     const { id } = c.req.valid("param");

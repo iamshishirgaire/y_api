@@ -3,7 +3,7 @@ import { zValidator } from "@hono/zod-validator";
 import { onErrorMsg } from "../../utils/zodValidationMessage";
 import { getHashTagsSchema } from "./hashtag.schema";
 import { HashtagService } from "./hashtag.service";
-import { cache } from "../../middleware/cache.middleware";
+import { cache } from "../../middlewares/cache.middleware";
 export const hashtagRoute = new Hono();
 
 const hashtagService = new HashtagService();

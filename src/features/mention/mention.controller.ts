@@ -4,7 +4,7 @@ import { onErrorMsg } from "../../utils/zodValidationMessage";
 import { getMentionsSchema } from "./mention.schema";
 import { MentionService } from "./mention.service";
 import type { Variables } from "../../utils/authVariables";
-import { cache } from "../../middleware/cache.middleware";
+import { cache } from "../../middlewares/cache.middleware";
 export const mentionRoute = new Hono<{ Variables: Variables }>();
 const mentionService = new MentionService();
 mentionRoute.get(

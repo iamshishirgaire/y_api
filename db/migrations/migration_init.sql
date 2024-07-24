@@ -1,6 +1,5 @@
 
-alter table users()
-ADD CONSTRAINT no_double_spaces CHECK (user_name !~ '  ');
+
 
 CREATE TABLE users (
     id UUID PRIMARY KEY,

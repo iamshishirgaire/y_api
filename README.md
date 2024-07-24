@@ -25,7 +25,7 @@ TASKS :
 - [x] Setup Logger (w winston)
 - [x] Setup Health Monitoring
 - [x] Setup Metrics & Logs Monitoring (w prometheus, grafana, loki )
-- [ ] Ratelimiting (w @aiven/redis)
-- [ ] Email Module
+- [ ] Ratelimiting (w rate-limiter-flexible)
+- [x] Email Feature
 - [ ] Setup BullMQ for background jobs
 - [ ] Setup CRON jobs

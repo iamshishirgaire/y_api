@@ -31,7 +31,6 @@ tweetRoute
 
       return c.json(tweet);
     } catch (error) {
-      console.log(error);
       throw new HTTPException(400, {
         message:
           error && error instanceof Error
@@ -74,5 +73,5 @@ tweetRoute
           message: "Failed to delete tweet",
         });
       }
-    },
+    }
   );

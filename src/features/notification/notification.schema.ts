@@ -4,10 +4,9 @@ const NotificationTypeEnum = z.enum(["verified", "mentions", "all"]);
 const PostTypeEnum = z.enum(["tweet", "poll"]);
 
 export const GetNotificationSchema = z.object({
-  user_id: z.string().uuid(),
   type: NotificationTypeEnum,
-  page: z.number().int(),
-  limit: z.number().int(),
+  page: z.string().transform((val) => Number.parseInt(val, 10)),
+  page_size: z.string().transform((val) => Number.parseInt(val, 10)),
 });
 export const GetSingleNotificationSchema = z.object({
   id: z.string().uuid(),
