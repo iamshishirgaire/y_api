@@ -29,3 +29,19 @@ TASKS :
 - [x] Email Feature
 - [ ] Setup BullMQ for background jobs
 - [ ] Setup CRON jobs
+
+## Running the project locally
+
+- Clone the project
+- Run `docker compose up -d`
+- replace .env.example with .env.local
+- Update the .env.local file with your database and other credentials
+- Run `bun install`
+- Run `bun db:migrate all`
+- Run `bun db:generate`
+- Run `bun db:seed`
+- Run `bun start`
+
+## Buildinf the docker image
+- Run `docker build -t twitter-api .`
+- Run `docker run -p 3000:3000 twitter-api`

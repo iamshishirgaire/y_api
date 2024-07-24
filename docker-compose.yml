@@ -27,7 +27,28 @@ services:
     volumes:
       - grafana_data:/var/lib/grafana
 
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=your_username
+      - POSTGRES_PASSWORD=your_password
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
 volumes:
   prometheus_data:
   loki_data:
   grafana_data:
+  postgres_data:
+  redis_data:
