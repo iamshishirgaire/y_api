@@ -18,11 +18,12 @@ const pollService = new PollService();
 
 pollRoute
   .get("/feed", async (c) => {
-    const userId = c.get("userId");
-    if (!userId) {
-      return c.json([]);
-    }
-    return c.json(await pollService.GetPollInFeed(userId));
+    // const userId = c.get("userId");
+    // console.log("userId", userId);
+    // if (!userId) {
+    //   return c.json([]);
+    // }
+    return c.json(await pollService.GetPollInFeed());
   })
   .get(
     "/:id",
@@ -57,6 +58,7 @@ pollRoute
     async (c) => {
       const data = c.req.valid("json");
       const userId = c.get("userId");
+      console.log("user", userId);
       const res = await pollService.vote(data, userId);
       return c.json(res);
     },

@@ -18,7 +18,9 @@ export async function testDbClient() {
   }
 }
 const dbClient = async () => {
-  const pg = postgres(env.DATABASE_URL);
+  const pg = postgres(env.DATABASE_URL, {
+    prepare: true,
+  });
   await pg`SELECT 1`;
   return pg;
 };

@@ -140,7 +140,7 @@ export default class PollService {
       });
       return voteData;
     } catch (error) {
-      console.log("error", error);
+      console.log("vote_error", error);
       throw new HTTPException(400, {
         message: "Failed to vote",
       });
@@ -173,15 +173,15 @@ export default class PollService {
       });
     }
   }
-  public async GetPollInFeed(userId: string) {
+  public async GetPollInFeed(userId?: string) {
     try {
       const polls = await db`
       SELECT p.id,
       p.user_id
       FROM polls p
-      JOIN followers f ON p.user_id = f.followee_id
-      WHERE f.follower_id = ${userId}
-        AND p.expired_at > CURRENT_TIMESTAMP;
+      Where       p.expired_at > CURRENT_TIMESTAMP;
+
+      ;
     `;
       return polls;
     } catch (error) {
