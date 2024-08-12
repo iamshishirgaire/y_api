@@ -42,6 +42,6 @@ TASKS :
 - Run `bun db:seed`
 - Run `bun start`
 
-## Buildinf the docker image
+## Building the docker image
 - Run `docker build -t twitter-api .`
 - Run `docker run -p 3000:3000 twitter-api`
